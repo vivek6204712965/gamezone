@@ -49,9 +49,9 @@
           <span>Play Now Free</span> <span>▶</span>
         </button>
         <div class="hero-badge-group">
-          <span>⭐ 4.9 Rating</span>
-          <span>👥 42,000+ Players</span>
           <span>⚡ Instant Play</span>
+          <span>🎮 100% Free Web Arcade</span>
+          <span>📱 Desktop & Mobile</span>
         </div>
       </div>
       <div class="hero-decor">🐍</div>
@@ -74,6 +74,10 @@
       <div class="section-title">
         <span>🎮 Ready-to-Play Games</span>
         <span class="game-count" id="gameCount">Showing 12 games</span>
+      </div>
+      <div class="db-status-badge" id="dbStatusBadge" title="Database connection status">
+        <span class="db-dot"></span>
+        <span id="dbStatusText">Initializing...</span>
       </div>
     </div>
 
@@ -117,6 +121,13 @@
     </p>
   </footer>
 
+  <!-- Supabase Official JS Client (Vanilla CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Supabase Configuration -->
+  <script src="js/supabase-config.js"></script>
+  <!-- Database Service -->
+  <script src="js/db.js"></script>
+  <!-- Main Portal Logic -->
   <script src="js/portal.js"></script>
 </body>
 </html>

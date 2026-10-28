@@ -250,7 +250,7 @@
     };
     const KEYS = Object.keys(SHAPES);
 
-    let grid = [];
+    let grid = Array.from({ length: ROWS }, () => Array(COLS).fill(0));
     let currentPiece = null;
     let nextPieceKey = null;
     let holdPieceKey = null;
