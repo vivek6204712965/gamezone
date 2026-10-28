@@ -3,7 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>Breakout Neon - Arcade Game</title>
+  <title>Breakout Neon - Play Classic Brick Breaker Game Online Free | GameZone</title>
+  <meta name="description" content="Play Breakout Neon free online. Move your paddle to bounce the ball, break neon bricks, collect wide paddle and multiball power-ups, and aim for a high score.">
+  <link rel="canonical" href="https://vivek6204712965.github.io/gamezone/games/breakout/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Breakout Neon - Play Classic Brick Breaker Game Online Free | GameZone">
+  <meta property="og:description" content="Play Breakout Neon free online. Move your paddle to bounce the ball, break neon bricks, collect wide paddle and multiball power-ups, and aim for a high score.">
+  <meta property="og:url" content="https://vivek6204712965.github.io/gamezone/games/breakout/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Breakout Neon - Play Classic Brick Breaker Game Online Free | GameZone">
+  <meta name="twitter:description" content="Play Breakout Neon free online. Move your paddle to bounce the ball, break neon bricks, collect wide paddle and multiball power-ups, and aim for a high score.">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
     body {
@@ -14,9 +23,135 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 10px;
-      overflow: hidden;
+      justify-content: flex-start;
+      padding: 16px 12px 40px;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+    /* Top Navigation Bar */
+    .game-top-bar {
+      width: 100%;
+      max-width: 520px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      padding: 0 4px;
+      gap: 12px;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #38bdf8;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 8px;
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      transition: all 0.2s ease;
+    }
+    .back-link:hover, .back-link:focus-visible {
+      background: rgba(56, 189, 248, 0.22);
+      border-color: #38bdf8;
+      color: #fff;
+      transform: translateX(-2px);
+      outline: 2px solid #38bdf8;
+      outline-offset: 2px;
+    }
+    .game-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #94a3b8;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 4px 10px;
+      border-radius: 9999px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      letter-spacing: 0.02em;
+    }
+
+    /* SEO & Instructions Guide Section */
+    .game-info-article {
+      width: 100%;
+      max-width: 520px;
+      margin-top: 24px;
+      background: rgba(17, 24, 39, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 24px 20px;
+      color: #cbd5e1;
+      font-size: 0.92rem;
+      line-height: 1.65;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      user-select: text;
+    }
+    .game-info-article h2 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #f8fafc;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 8px;
+    }
+    .game-info-article h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #38bdf8;
+      margin: 16px 0 8px;
+    }
+    .game-info-article p {
+      margin-bottom: 12px;
+    }
+    .game-info-article ul {
+      margin: 0 0 14px 20px;
+    }
+    .game-info-article li {
+      margin-bottom: 6px;
+    }
+    .controls-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 12px 0 16px;
+    }
+    @media (max-width: 520px) {
+      .controls-grid { grid-template-columns: 1fr; }
+    }
+    .controls-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+    .controls-card h4 {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #f1f5f9;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .controls-card ul {
+      margin: 0 0 0 16px;
+      font-size: 0.85rem;
+    }
+    kbd {
+      background: #1e293b;
+      border: 1px solid #475569;
+      border-radius: 4px;
+      box-shadow: 0 1px 0 rgba(0,0,0,0.4);
+      color: #f8fafc;
+      display: inline-block;
+      font-family: monospace;
+      font-size: 0.78rem;
+      padding: 2px 5px;
+      margin: 0 2px;
     }
     .game-container {
       display: flex;
@@ -121,6 +256,13 @@
 </head>
 <body>
 
+  <nav class="game-top-bar" aria-label="Game Navigation">
+    <a href="../../index.html" target="_top" class="back-link">
+      ← Back to GameZone Arcade
+    </a>
+    <span class="game-badge">🎮 Instant Web Game</span>
+  </nav>
+
   <div class="game-container">
     <div class="header">
       <div class="title">🧱 Breakout Neon</div>
@@ -154,6 +296,42 @@
       <button class="m-btn" id="btnRight">Move Right ▶</button>
     </div>
   </div>
+
+  <article class="game-info-article">
+    <h2>About Breakout Neon</h2>
+    <p>Breakout Neon is an action-packed retro brick-shattering arcade game revamped with energetic particle bursts, neon glow physics, and falling bonus power-ups. Guard your baseline with a nimble paddle, ricochet energy balls into dense formations of colorful bricks, and aim for a clean sweep across all tiers.</p>
+
+    <h3>How to Play</h3>
+    <p>Launch the ball and glide your paddle horizontally across the bottom track to keep the ball bouncing upward. Each brick shattered awards points based on its row tier. Keep a sharp eye out for floating power-up capsules that drop from shattered bricks: collect Wide Paddle to expand your coverage, Multi-Ball to unleash 3 simultaneous balls, or Extra Life to replenish your safety buffer.</p>
+
+    <h3>Game Controls</h3>
+    <div class="controls-grid">
+      <div class="controls-card">
+        <h4>⌨️ Desktop Controls</h4>
+        <ul>
+          <li><strong>Mouse Movement</strong> — Glide paddle smoothly across canvas</li>
+          <li><kbd>←</kbd> / <kbd>→</kbd> or <kbd>A</kbd> / <kbd>D</kbd> — Move paddle left / right</li>
+          <li><kbd>Space</kbd> — Launch ball / restart game</li>
+        </ul>
+      </div>
+      <div class="controls-card">
+        <h4>📱 Mobile & Touch Controls</h4>
+        <ul>
+          <li><strong>Touch & Drag</strong> — Drag finger across canvas to steer paddle</li>
+          <li><strong>◀ Move Left / Move Right ▶</strong> — Tap bottom navigation buttons</li>
+          <li><strong>Start Game / Play Again</strong> — Tap on-screen overlay buttons</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Rules & Dynamic Rebound Tips</h3>
+    <ul>
+      <li><strong>Angle Control:</strong> The ball's horizontal rebound angle is determined by where it strikes your paddle. Hit near the edges to send sharp diagonal cross-court shots.</li>
+      <li><strong>Falling Power-Ups:</strong> Catch falling capsules with your paddle to activate bonuses: <strong>Wide Paddle</strong>, <strong>Multi-Ball</strong>, and <strong>Extra Life</strong>.</li>
+      <li><strong>Three Starting Lives:</strong> You begin each round with 3 lives. Losing all active balls from the bottom boundary costs one life.</li>
+      <li><strong>Clear the Wall:</strong> Completely demolish all brick layers to achieve victory and secure your highest score in local browser storage.</li>
+    </ul>
+  </article>
 
   <script>
     // Audio synthesizer

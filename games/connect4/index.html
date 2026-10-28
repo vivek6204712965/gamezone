@@ -3,7 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>Connect Four - Arcade Game</title>
+  <title>Connect Four - Play 4-in-a-Row Strategy Game Online Free | GameZone</title>
+  <meta name="description" content="Play Connect Four online free. Drop red and yellow discs into a 7-column, 6-row grid. Connect four in a row horizontally, vertically, or diagonally to win.">
+  <link rel="canonical" href="https://vivek6204712965.github.io/gamezone/games/connect4/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Connect Four - Play 4-in-a-Row Strategy Game Online Free | GameZone">
+  <meta property="og:description" content="Play Connect Four online free. Drop red and yellow discs into a 7-column, 6-row grid. Connect four in a row horizontally, vertically, or diagonally to win.">
+  <meta property="og:url" content="https://vivek6204712965.github.io/gamezone/games/connect4/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Connect Four - Play 4-in-a-Row Strategy Game Online Free | GameZone">
+  <meta name="twitter:description" content="Play Connect Four online free. Drop red and yellow discs into a 7-column, 6-row grid. Connect four in a row horizontally, vertically, or diagonally to win.">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
     body {
@@ -14,9 +23,135 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 10px;
-      overflow: hidden;
+      justify-content: flex-start;
+      padding: 16px 12px 40px;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+    /* Top Navigation Bar */
+    .game-top-bar {
+      width: 100%;
+      max-width: 480px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      padding: 0 4px;
+      gap: 12px;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #38bdf8;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 8px;
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      transition: all 0.2s ease;
+    }
+    .back-link:hover, .back-link:focus-visible {
+      background: rgba(56, 189, 248, 0.22);
+      border-color: #38bdf8;
+      color: #fff;
+      transform: translateX(-2px);
+      outline: 2px solid #38bdf8;
+      outline-offset: 2px;
+    }
+    .game-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #94a3b8;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 4px 10px;
+      border-radius: 9999px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      letter-spacing: 0.02em;
+    }
+
+    /* SEO & Instructions Guide Section */
+    .game-info-article {
+      width: 100%;
+      max-width: 480px;
+      margin-top: 24px;
+      background: rgba(17, 24, 39, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 24px 20px;
+      color: #cbd5e1;
+      font-size: 0.92rem;
+      line-height: 1.65;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      user-select: text;
+    }
+    .game-info-article h2 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #f8fafc;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 8px;
+    }
+    .game-info-article h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #38bdf8;
+      margin: 16px 0 8px;
+    }
+    .game-info-article p {
+      margin-bottom: 12px;
+    }
+    .game-info-article ul {
+      margin: 0 0 14px 20px;
+    }
+    .game-info-article li {
+      margin-bottom: 6px;
+    }
+    .controls-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 12px 0 16px;
+    }
+    @media (max-width: 520px) {
+      .controls-grid { grid-template-columns: 1fr; }
+    }
+    .controls-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+    .controls-card h4 {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #f1f5f9;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .controls-card ul {
+      margin: 0 0 0 16px;
+      font-size: 0.85rem;
+    }
+    kbd {
+      background: #1e293b;
+      border: 1px solid #475569;
+      border-radius: 4px;
+      box-shadow: 0 1px 0 rgba(0,0,0,0.4);
+      color: #f8fafc;
+      display: inline-block;
+      font-family: monospace;
+      font-size: 0.78rem;
+      padding: 2px 5px;
+      margin: 0 2px;
     }
     .game-container {
       max-width: 480px;
@@ -143,6 +278,13 @@
 </head>
 <body>
 
+  <nav class="game-top-bar" aria-label="Game Navigation">
+    <a href="../../index.html" target="_top" class="back-link">
+      ← Back to GameZone Arcade
+    </a>
+    <span class="game-badge">🎮 Instant Web Game</span>
+  </nav>
+
   <div class="game-container">
     <div class="header">
       <div class="title">🔴 Connect Four 🟡</div>
@@ -169,6 +311,42 @@
 
     <button class="btn-reset" id="resetBtn">Restart Game</button>
   </div>
+
+  <article class="game-info-article">
+    <h2>About Connect Four</h2>
+    <p>Connect Four is an arcade web adaptation of the world-famous vertical 4-in-a-row strategy game. Drop vibrant red and yellow tokens into a suspended 7-column by 6-row blue grid. Challenge the tactical AI opponent or go head-to-head with a companion in local pass-and-play multiplayer with zero install required.</p>
+
+    <h3>How to Play</h3>
+    <p>Select your game mode (<strong>vs AI</strong> or <strong>2 Player</strong>) and alternate turns dropping discs into any of the 7 vertical columns. Discs plummet down the column to occupy the lowest available empty slot. The first player to arrange 4 contiguous discs of their color in an unbroken straight line (horizontally, vertically, or diagonally) claims victory. If all 42 slots are filled without 4 in a line, the game ends in a draw.</p>
+
+    <h3>Game Controls</h3>
+    <div class="controls-grid">
+      <div class="controls-card">
+        <h4>⌨️ Desktop Controls</h4>
+        <ul>
+          <li><strong>Mouse Click</strong> — Click top arrow buttons (▼) or columns directly</li>
+          <li><strong>Mode Buttons</strong> — Toggle between vs AI and 2 Player</li>
+          <li><strong>Restart Game</strong> — Clear board and reset current match</li>
+        </ul>
+      </div>
+      <div class="controls-card">
+        <h4>📱 Mobile & Touch Controls</h4>
+        <ul>
+          <li><strong>Column Tap</strong> — Tap any column arrow or cell to drop disc</li>
+          <li><strong>Mode Select</strong> — Switch between 1P vs AI and 2-Player modes</li>
+          <li><strong>Restart Game</strong> — Tap to begin next round</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Rules & Tactical Board Tips</h3>
+    <ul>
+      <li><strong>Control the Center Column:</strong> The 4th (middle) column participates in the highest number of potential winning combinations across the board. Securing center control yields massive strategic leverage.</li>
+      <li><strong>AI Strategic Heuristic:</strong> The single-player AI analyzes all 7 columns to: 1) Complete immediate 4-in-a-row wins, 2) Block opponent 3-in-a-row traps, and 3) Prioritize central column development.</li>
+      <li><strong>Avoid Setup Traps:</strong> Be careful not to drop a disc that enables your opponent to drop directly on top of you to complete their 4-in-a-row.</li>
+      <li><strong>Record Persistence:</strong> Victorious matches won against the AI are tracked and safely stored in browser local storage.</li>
+    </ul>
+  </article>
 
   <script>
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();

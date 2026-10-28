@@ -3,7 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>Galaxy Defender - Arcade Game</title>
+  <title>Galaxy Defender - Play Space Invaders Arcade Game Online Free | GameZone</title>
+  <meta name="description" content="Play Galaxy Defender free online. Defend Earth against descending alien fleets, take cover behind destructible bunkers, and dodge alien laser fire.">
+  <link rel="canonical" href="https://vivek6204712965.github.io/gamezone/games/space-invaders/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Galaxy Defender - Play Space Invaders Arcade Game Online Free | GameZone">
+  <meta property="og:description" content="Play Galaxy Defender free online. Defend Earth against descending alien fleets, take cover behind destructible bunkers, and dodge alien laser fire.">
+  <meta property="og:url" content="https://vivek6204712965.github.io/gamezone/games/space-invaders/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Galaxy Defender - Play Space Invaders Arcade Game Online Free | GameZone">
+  <meta name="twitter:description" content="Play Galaxy Defender free online. Defend Earth against descending alien fleets, take cover behind destructible bunkers, and dodge alien laser fire.">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
     body {
@@ -14,9 +23,135 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 10px;
-      overflow: hidden;
+      justify-content: flex-start;
+      padding: 16px 12px 40px;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+    /* Top Navigation Bar */
+    .game-top-bar {
+      width: 100%;
+      max-width: 520px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      padding: 0 4px;
+      gap: 12px;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #38bdf8;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 8px;
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      transition: all 0.2s ease;
+    }
+    .back-link:hover, .back-link:focus-visible {
+      background: rgba(56, 189, 248, 0.22);
+      border-color: #38bdf8;
+      color: #fff;
+      transform: translateX(-2px);
+      outline: 2px solid #38bdf8;
+      outline-offset: 2px;
+    }
+    .game-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #94a3b8;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 4px 10px;
+      border-radius: 9999px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      letter-spacing: 0.02em;
+    }
+
+    /* SEO & Instructions Guide Section */
+    .game-info-article {
+      width: 100%;
+      max-width: 520px;
+      margin-top: 24px;
+      background: rgba(17, 24, 39, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 24px 20px;
+      color: #cbd5e1;
+      font-size: 0.92rem;
+      line-height: 1.65;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      user-select: text;
+    }
+    .game-info-article h2 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #f8fafc;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 8px;
+    }
+    .game-info-article h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #38bdf8;
+      margin: 16px 0 8px;
+    }
+    .game-info-article p {
+      margin-bottom: 12px;
+    }
+    .game-info-article ul {
+      margin: 0 0 14px 20px;
+    }
+    .game-info-article li {
+      margin-bottom: 6px;
+    }
+    .controls-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 12px 0 16px;
+    }
+    @media (max-width: 520px) {
+      .controls-grid { grid-template-columns: 1fr; }
+    }
+    .controls-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+    .controls-card h4 {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #f1f5f9;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .controls-card ul {
+      margin: 0 0 0 16px;
+      font-size: 0.85rem;
+    }
+    kbd {
+      background: #1e293b;
+      border: 1px solid #475569;
+      border-radius: 4px;
+      box-shadow: 0 1px 0 rgba(0,0,0,0.4);
+      color: #f8fafc;
+      display: inline-block;
+      font-family: monospace;
+      font-size: 0.78rem;
+      padding: 2px 5px;
+      margin: 0 2px;
     }
     .game-container {
       display: flex;
@@ -118,6 +253,13 @@
 </head>
 <body>
 
+  <nav class="game-top-bar" aria-label="Game Navigation">
+    <a href="../../index.html" target="_top" class="back-link">
+      ← Back to GameZone Arcade
+    </a>
+    <span class="game-badge">🎮 Instant Web Game</span>
+  </nav>
+
   <div class="game-container">
     <div class="header">
       <div class="title">👾 Galaxy Defender</div>
@@ -153,6 +295,42 @@
       <button class="m-btn" id="mRight">Right ▶</button>
     </div>
   </div>
+
+  <article class="game-info-article">
+    <h2>About Galaxy Defender</h2>
+    <p>Galaxy Defender is a thrilling browser recreation of the monumental fixed-shooter arcade classic Space Invaders. Commanded from Earth's orbital defense line, your starfighter must intercept and eradicate descending formations of alien combatants before their mothership armada descends to planetfall.</p>
+
+    <h3>How to Play</h3>
+    <p>Steer your defense cannon along the bottom perimeter and unleash vertical laser volleys into the alien grid. The alien ranks march horizontally, dropping downward each time they touch the screen borders. Take cover behind the 4 defense bunkers to shield against incoming plasma bombs, but beware: bunkers erode under sustained bombardment from both sides!</p>
+
+    <h3>Game Controls</h3>
+    <div class="controls-grid">
+      <div class="controls-card">
+        <h4>⌨️ Desktop Controls</h4>
+        <ul>
+          <li><kbd>←</kbd> / <kbd>→</kbd> or <kbd>A</kbd> / <kbd>D</kbd> — Move cannon left / right</li>
+          <li><kbd>Space</kbd> — Fire laser cannon</li>
+          <li><kbd>P</kbd> — Pause / resume gameplay</li>
+        </ul>
+      </div>
+      <div class="controls-card">
+        <h4>📱 Mobile & Touch Controls</h4>
+        <ul>
+          <li><strong>◀ Left / Right ▶</strong> — Tap direction arrows to steer</li>
+          <li><strong>🔥 FIRE</strong> — Tap center fire button to unleash lasers</li>
+          <li><strong>Engage Battle / Try Again</strong> — Tap on-screen overlay buttons</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Rules & Tactical Defense Tips</h3>
+    <ul>
+      <li><strong>Destructible Bunkers:</strong> 4 defensive bunkers absorb both enemy ordnance and your own stray shots. Use peek-and-shoot tactics from beneath their eaves.</li>
+      <li><strong>Marching Speed Acceleration:</strong> As alien ranks thin out, the remaining invaders march and drop significantly faster. Prioritize side columns to slow their descent.</li>
+      <li><strong>Wave Progression:</strong> Eradicating an entire fleet immediately advances to the next wave with tighter drop intervals and fiercer bomb drop rates.</li>
+      <li><strong>Fleet High Score:</strong> Your top combat tally is preserved across sessions via browser local storage.</li>
+    </ul>
+  </article>
 
   <script>
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();

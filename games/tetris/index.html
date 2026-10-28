@@ -3,7 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>Tetris Block Master - Arcade Game</title>
+  <title>Tetris Block Master - Play Free Online Tetris Puzzle Game | GameZone</title>
+  <meta name="description" content="Play Tetris Block Master online free. Stack falling tetromino blocks, rotate pieces with SRS, hold blocks, clear lines, and test your spatial reflexes.">
+  <link rel="canonical" href="https://vivek6204712965.github.io/gamezone/games/tetris/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Tetris Block Master - Play Free Online Tetris Puzzle Game | GameZone">
+  <meta property="og:description" content="Play Tetris Block Master online free. Stack falling tetromino blocks, rotate pieces with SRS, hold blocks, clear lines, and test your spatial reflexes.">
+  <meta property="og:url" content="https://vivek6204712965.github.io/gamezone/games/tetris/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Tetris Block Master - Play Free Online Tetris Puzzle Game | GameZone">
+  <meta name="twitter:description" content="Play Tetris Block Master online free. Stack falling tetromino blocks, rotate pieces with SRS, hold blocks, clear lines, and test your spatial reflexes.">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
     body {
@@ -14,9 +23,135 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 10px;
-      overflow: hidden;
+      justify-content: flex-start;
+      padding: 16px 12px 40px;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+    /* Top Navigation Bar */
+    .game-top-bar {
+      width: 100%;
+      max-width: 520px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      padding: 0 4px;
+      gap: 12px;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #38bdf8;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 8px;
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      transition: all 0.2s ease;
+    }
+    .back-link:hover, .back-link:focus-visible {
+      background: rgba(56, 189, 248, 0.22);
+      border-color: #38bdf8;
+      color: #fff;
+      transform: translateX(-2px);
+      outline: 2px solid #38bdf8;
+      outline-offset: 2px;
+    }
+    .game-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #94a3b8;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 4px 10px;
+      border-radius: 9999px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      letter-spacing: 0.02em;
+    }
+
+    /* SEO & Instructions Guide Section */
+    .game-info-article {
+      width: 100%;
+      max-width: 520px;
+      margin-top: 24px;
+      background: rgba(17, 24, 39, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 24px 20px;
+      color: #cbd5e1;
+      font-size: 0.92rem;
+      line-height: 1.65;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      user-select: text;
+    }
+    .game-info-article h2 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #f8fafc;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 8px;
+    }
+    .game-info-article h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #38bdf8;
+      margin: 16px 0 8px;
+    }
+    .game-info-article p {
+      margin-bottom: 12px;
+    }
+    .game-info-article ul {
+      margin: 0 0 14px 20px;
+    }
+    .game-info-article li {
+      margin-bottom: 6px;
+    }
+    .controls-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 12px 0 16px;
+    }
+    @media (max-width: 520px) {
+      .controls-grid { grid-template-columns: 1fr; }
+    }
+    .controls-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+    .controls-card h4 {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #f1f5f9;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .controls-card ul {
+      margin: 0 0 0 16px;
+      font-size: 0.85rem;
+    }
+    kbd {
+      background: #1e293b;
+      border: 1px solid #475569;
+      border-radius: 4px;
+      box-shadow: 0 1px 0 rgba(0,0,0,0.4);
+      color: #f8fafc;
+      display: inline-block;
+      font-family: monospace;
+      font-size: 0.78rem;
+      padding: 2px 5px;
+      margin: 0 2px;
     }
     .game-container {
       display: flex;
@@ -133,6 +268,13 @@
 </head>
 <body>
 
+  <nav class="game-top-bar" aria-label="Game Navigation">
+    <a href="../../index.html" target="_top" class="back-link">
+      ← Back to GameZone Arcade
+    </a>
+    <span class="game-badge">🎮 Instant Web Game</span>
+  </nav>
+
   <div class="game-container">
     <!-- Left panel: Hold & Level -->
     <div class="side-panel">
@@ -194,6 +336,47 @@
     <button class="m-btn" id="mDrop" style="background:#7c3aed;">⚡ Drop</button>
     <button class="m-btn" id="mHold">Hold</button>
   </div>
+
+  <article class="game-info-article">
+    <h2>About Tetris Block Master</h2>
+    <p>Tetris Block Master is an authentic, full-featured browser edition of the world's most popular falling-block puzzle game. Featuring the official Super Rotation System (SRS) with wall kicks, ghost piece drop projection, dedicated piece hold queue, and progressive speed scaling, this web version delivers high-precision competitive puzzle action without requiring any downloads.</p>
+
+    <h3>How to Play</h3>
+    <p>Press Start Game to begin dropping tetrominoes into the 10x20 matrix. Maneuver and rotate pieces as they fall to form solid horizontal lines without empty gaps. Completed lines vanish, awarding points and shifting all blocks above downward. Prevent blocks from stacking to the top ceiling to stay alive.</p>
+
+    <h3>Game Controls</h3>
+    <div class="controls-grid">
+      <div class="controls-card">
+        <h4>⌨️ Desktop Controls</h4>
+        <ul>
+          <li><kbd>←</kbd> / <kbd>→</kbd> or <kbd>A</kbd> / <kbd>D</kbd> — Move left / right</li>
+          <li><kbd>↑</kbd> or <kbd>W</kbd> — Rotate clockwise (SRS)</li>
+          <li><kbd>↓</kbd> or <kbd>S</kbd> — Soft drop (faster fall)</li>
+          <li><kbd>Space</kbd> — Hard drop (instant drop & lock)</li>
+          <li><kbd>C</kbd> or <kbd>Shift</kbd> — Hold current piece</li>
+          <li><kbd>P</kbd> — Pause / resume game</li>
+        </ul>
+      </div>
+      <div class="controls-card">
+        <h4>📱 Mobile & Touch Controls</h4>
+        <ul>
+          <li><strong>◀ / ▶</strong> — Slide piece sideways</li>
+          <li><strong>↻</strong> — Rotate tetromino</li>
+          <li><strong>▼</strong> — Soft drop</li>
+          <li><strong>⚡ Drop</strong> — Instant hard drop</li>
+          <li><strong>Hold</strong> — Swap with hold queue</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Rules & Scoring Mechanics</h3>
+    <ul>
+      <li><strong>Line Clear Rewards:</strong> 1 line = 100 × level, 2 lines = 300 × level, 3 lines = 500 × level, and a 4-line Tetris = 800 × level points.</li>
+      <li><strong>Level Scaling:</strong> Every 10 lines cleared increments your level, accelerating piece gravity.</li>
+      <li><strong>Strategic Hold:</strong> Press <kbd>C</kbd> or tap Hold to bank an awkward piece for later. You can swap once per falling piece.</li>
+      <li><strong>Ghost Piece Guide:</strong> Track the semi-transparent projection on the floor to position your hard drops with pinpoint precision.</li>
+    </ul>
+  </article>
 
   <script>
     // Audio synthesizer

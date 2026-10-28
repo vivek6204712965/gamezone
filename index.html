@@ -61,10 +61,10 @@
   <section class="hero">
     <div class="hero-banner">
       <div class="hero-content">
-        <span class="hero-tag">🔥 FEATURED GAME OF THE DAY</span>
-        <h1 class="hero-title">Snake Neon Cyber Edition</h1>
+        <span class="hero-tag">🔥 FEATURED GAME: SNAKE NEON</span>
+        <h1 class="hero-title">Play Free Instant Web Games Online</h1>
         <p class="hero-desc">
-          Experience the iconic retro classic rebuilt with dynamic neon visuals, speed ramps, synthesized sound effects, and persistent high scores. Zero download required.
+          Experience 12 fast, responsive, and free browser games playable instantly with zero downloads. Enjoy classic arcade titles like Snake Neon, Tetris, 2048, and Space Invaders with high score tracking.
         </p>
         <button class="hero-btn" id="heroPlayBtn">
           <span>Play Now Free</span> <span>▶</span>
@@ -93,10 +93,10 @@
   <!-- Games Section -->
   <main class="games-section" id="gamesSection">
     <div class="section-header">
-      <div class="section-title">
+      <h2 class="section-title">
         <span>🎮 Ready-to-Play Games</span>
         <span class="game-count" id="gameCount">Showing 12 games</span>
-      </div>
+      </h2>
       <div class="db-status-badge" id="dbStatusBadge" title="Database connection status">
         <span class="db-dot"></span>
         <span id="dbStatusText">Initializing...</span>
@@ -105,7 +105,246 @@
 
     <!-- Games Cards Grid -->
     <div class="games-grid" id="gamesGrid">
-      <!-- Injected via portal.js -->
+      <!-- Crawlable Static Fallback Cards for SEO & No-JS -->
+      <article class="game-card fallback-card">
+        <a href="games/snake/" class="fallback-card-link">
+          <div class="card-thumbnail" style="background: linear-gradient(135deg, #064e3b, #022c22);">
+            <span class="thumbnail-icon">🐍</span>
+            <span class="badge-tag">Popular</span>
+          </div>
+          <div class="card-body">
+            <div class="card-title-row">
+              <h3 class="card-title">Snake Neon</h3>
+              <span class="card-category-pill">Arcade</span>
+            </div>
+            <p class="card-desc">Classic neon snake! Eat glowing orbs, grow your tail, and beat your highest score.</p>
+            <div class="card-footer">
+              <span class="card-category">● Arcade</span>
+              <span class="card-play-btn">Play Now ▶</span>
+            </div>
+          </div>
+        </a>
+      </article>
+
+      <article class="game-card fallback-card">
+        <a href="games/tetris/" class="fallback-card-link">
+          <div class="card-thumbnail" style="background: linear-gradient(135deg, #4c1d95, #2e1065);">
+            <span class="thumbnail-icon">🧱</span>
+            <span class="badge-tag">Classic</span>
+          </div>
+          <div class="card-body">
+            <div class="card-title-row">
+              <h3 class="card-title">Tetris Block Master</h3>
+              <span class="card-category-pill">Puzzle</span>
+            </div>
+            <p class="card-desc">The legendary block-stacking puzzle with SRS rotation, ghost piece, and hold piece.</p>
+            <div class="card-footer">
+              <span class="card-category">● Puzzle</span>
+              <span class="card-play-btn">Play Now ▶</span>
+            </div>
+          </div>
+        </a>
+      </article>
+
+      <article class="game-card fallback-card">
+        <a href="games/2048/" class="fallback-card-link">
+          <div class="card-thumbnail" style="background: linear-gradient(135deg, #78350f, #451a03);">
+            <span class="thumbnail-icon">🔢</span>
+            <span class="badge-tag">Brain Game</span>
+          </div>
+          <div class="card-body">
+            <div class="card-title-row">
+              <h3 class="card-title">2048 Deluxe</h3>
+              <span class="card-category-pill">Puzzle</span>
+            </div>
+            <p class="card-desc">Slide and merge identical numbered tiles until you reach the glorious 2048 tile!</p>
+            <div class="card-footer">
+              <span class="card-category">● Puzzle</span>
+              <span class="card-play-btn">Play Now ▶</span>
+            </div>
+          </div>
+        </a>
+      </article>
+
+      <article class="game-card fallback-card">
+        <a href="games/flappy/" class="fallback-card-link">
+          <div class="card-thumbnail" style="background: linear-gradient(135deg, #075985, #0c4a6e);">
+            <span class="thumbnail-icon">🐦</span>
+            <span class="badge-tag">Addictive</span>
+          </div>
+          <div class="card-body">
+            <div class="card-title-row">
+              <h3 class="card-title">Flappy Cyber</h3>
+              <span class="card-category-pill">Action</span>
+            </div>
+            <p class="card-desc">Flap through tricky cyber pipe gaps without crashing in this rhythm reflex game.</p>
+            <div class="card-footer">
+              <span class="card-category">● Action</span>
+              <span class="card-play-btn">Play Now ▶</span>
+            </div>
+          </div>
+        </a>
+      </article>
+
+      <article class="game-card fallback-card">
+        <a href="games/breakout/" class="fallback-card-link">
+          <div class="card-thumbnail" style="background: linear-gradient(135deg, #881337, #4c0519);">
+            <span class="thumbnail-icon">🏓</span>
+            <span class="badge-tag">Retro</span>
+          </div>
+          <div class="card-body">
+            <div class="card-title-row">
+              <h3 class="card-title">Breakout Neon</h3>
+              <span class="card-category-pill">Arcade</span>
+            </div>
+            <p class="card-desc">Smash colorful brick formations with power-ups like multi-ball, lasers, and extra lives.</p>
+            <div class="card-footer">
+              <span class="card-category">● Arcade</span>
+              <span class="card-play-btn">Play Now ▶</span>
+            </div>
+          </div>
+        </a>
+      </article>
+
+      <article class="game-card fallback-card">
+        <a href="games/dino/" class="fallback-card-link">
+          <div class="card-thumbnail" style="background: linear-gradient(135deg, #064e3b, #1e293b);">
+            <span class="thumbnail-icon">🦖</span>
+            <span class="badge-tag">Endless</span>
+          </div>
+          <div class="card-body">
+            <div class="card-title-row">
+              <h3 class="card-title">Dino Runner</h3>
+              <span class="card-category-pill">Action</span>
+            </div>
+            <p class="card-desc">Sprint through the endless desert, jumping over cacti and ducking under pterodactyls.</p>
+            <div class="card-footer">
+              <span class="card-category">● Action</span>
+              <span class="card-play-btn">Play Now ▶</span>
+            </div>
+          </div>
+        </a>
+      </article>
+
+      <article class="game-card fallback-card">
+        <a href="games/space-invaders/" class="fallback-card-link">
+          <div class="card-thumbnail" style="background: linear-gradient(135deg, #581c87, #1e1b4b);">
+            <span class="thumbnail-icon">👾</span>
+            <span class="badge-tag">Sci-Fi</span>
+          </div>
+          <div class="card-body">
+            <div class="card-title-row">
+              <h3 class="card-title">Galaxy Defender</h3>
+              <span class="card-category-pill">Action</span>
+            </div>
+            <p class="card-desc">Defend planet Earth from descending waves of alien invaders and laser strikes.</p>
+            <div class="card-footer">
+              <span class="card-category">● Action</span>
+              <span class="card-play-btn">Play Now ▶</span>
+            </div>
+          </div>
+        </a>
+      </article>
+
+      <article class="game-card fallback-card">
+        <a href="games/pong/" class="fallback-card-link">
+          <div class="card-thumbnail" style="background: linear-gradient(135deg, #1e1b4b, #0f172a);">
+            <span class="thumbnail-icon">🏓</span>
+            <span class="badge-tag">2-Player</span>
+          </div>
+          <div class="card-body">
+            <div class="card-title-row">
+              <h3 class="card-title">Pong Retro Arena</h3>
+              <span class="card-category-pill">Retro</span>
+            </div>
+            <p class="card-desc">The original table tennis arcade battle. Play solo against the smart AI or with a friend!</p>
+            <div class="card-footer">
+              <span class="card-category">● Retro</span>
+              <span class="card-play-btn">Play Now ▶</span>
+            </div>
+          </div>
+        </a>
+      </article>
+
+      <article class="game-card fallback-card">
+        <a href="games/memory/" class="fallback-card-link">
+          <div class="card-thumbnail" style="background: linear-gradient(135deg, #831843, #500724);">
+            <span class="thumbnail-icon">🃏</span>
+            <span class="badge-tag">Casual</span>
+          </div>
+          <div class="card-body">
+            <div class="card-title-row">
+              <h3 class="card-title">Memory Match</h3>
+              <span class="card-category-pill">Puzzle</span>
+            </div>
+            <p class="card-desc">Test your brain memory by flipping cards and discovering matching emoji pairs.</p>
+            <div class="card-footer">
+              <span class="card-category">● Puzzle</span>
+              <span class="card-play-btn">Play Now ▶</span>
+            </div>
+          </div>
+        </a>
+      </article>
+
+      <article class="game-card fallback-card">
+        <a href="games/tictactoe/" class="fallback-card-link">
+          <div class="card-thumbnail" style="background: linear-gradient(135deg, #0369a1, #1e1b4b);">
+            <span class="thumbnail-icon">⭕</span>
+            <span class="badge-tag">1v1 AI</span>
+          </div>
+          <div class="card-body">
+            <div class="card-title-row">
+              <h3 class="card-title">XO Master</h3>
+              <span class="card-category-pill">Retro</span>
+            </div>
+            <p class="card-desc">Tic-Tac-Toe reimagined with neon glow, tactical AI, and local 2-Player mode.</p>
+            <div class="card-footer">
+              <span class="card-category">● Retro</span>
+              <span class="card-play-btn">Play Now ▶</span>
+            </div>
+          </div>
+        </a>
+      </article>
+
+      <article class="game-card fallback-card">
+        <a href="games/minesweeper/" class="fallback-card-link">
+          <div class="card-thumbnail" style="background: linear-gradient(135deg, #14532d, #052e16);">
+            <span class="thumbnail-icon">💣</span>
+            <span class="badge-tag">Strategy</span>
+          </div>
+          <div class="card-body">
+            <div class="card-title-row">
+              <h3 class="card-title">Minesweeper Classic</h3>
+              <span class="card-category-pill">Puzzle</span>
+            </div>
+            <p class="card-desc">Uncover safe tiles without detonating hidden mines using logic numbers and flags.</p>
+            <div class="card-footer">
+              <span class="card-category">● Puzzle</span>
+              <span class="card-play-btn">Play Now ▶</span>
+            </div>
+          </div>
+        </a>
+      </article>
+
+      <article class="game-card fallback-card">
+        <a href="games/connect4/" class="fallback-card-link">
+          <div class="card-thumbnail" style="background: linear-gradient(135deg, #1e3a8a, #0f172a);">
+            <span class="thumbnail-icon">🔴</span>
+            <span class="badge-tag">Strategy</span>
+          </div>
+          <div class="card-body">
+            <div class="card-title-row">
+              <h3 class="card-title">Connect Four</h3>
+              <span class="card-category-pill">Retro</span>
+            </div>
+            <p class="card-desc">Drop tokens into the grid to form a line of 4 consecutive discs before your opponent!</p>
+            <div class="card-footer">
+              <span class="card-category">● Retro</span>
+              <span class="card-play-btn">Play Now ▶</span>
+            </div>
+          </div>
+        </a>
+      </article>
     </div>
   </main>
 
@@ -135,6 +374,60 @@
 
   <!-- Footer -->
   <footer>
+    <div class="footer-directory">
+      <h2 class="footer-directory-heading">Free Online Arcade Games</h2>
+      <nav class="footer-games-grid" aria-label="Arcade Games Directory">
+        <a href="games/snake/" class="footer-game-item">
+          <span class="footer-game-icon">🐍</span>
+          <span class="footer-game-title">Snake Neon</span>
+        </a>
+        <a href="games/tetris/" class="footer-game-item">
+          <span class="footer-game-icon">🧱</span>
+          <span class="footer-game-title">Tetris Block Master</span>
+        </a>
+        <a href="games/2048/" class="footer-game-item">
+          <span class="footer-game-icon">🔢</span>
+          <span class="footer-game-title">2048 Deluxe</span>
+        </a>
+        <a href="games/flappy/" class="footer-game-item">
+          <span class="footer-game-icon">🐦</span>
+          <span class="footer-game-title">Flappy Cyber</span>
+        </a>
+        <a href="games/breakout/" class="footer-game-item">
+          <span class="footer-game-icon">🏓</span>
+          <span class="footer-game-title">Breakout Neon</span>
+        </a>
+        <a href="games/dino/" class="footer-game-item">
+          <span class="footer-game-icon">🦖</span>
+          <span class="footer-game-title">Dino Runner</span>
+        </a>
+        <a href="games/space-invaders/" class="footer-game-item">
+          <span class="footer-game-icon">👾</span>
+          <span class="footer-game-title">Galaxy Defender</span>
+        </a>
+        <a href="games/pong/" class="footer-game-item">
+          <span class="footer-game-icon">🏓</span>
+          <span class="footer-game-title">Pong Retro Arena</span>
+        </a>
+        <a href="games/memory/" class="footer-game-item">
+          <span class="footer-game-icon">🃏</span>
+          <span class="footer-game-title">Memory Match</span>
+        </a>
+        <a href="games/tictactoe/" class="footer-game-item">
+          <span class="footer-game-icon">⭕</span>
+          <span class="footer-game-title">XO Master</span>
+        </a>
+        <a href="games/minesweeper/" class="footer-game-item">
+          <span class="footer-game-icon">💣</span>
+          <span class="footer-game-title">Minesweeper Classic</span>
+        </a>
+        <a href="games/connect4/" class="footer-game-item">
+          <span class="footer-game-icon">🔴</span>
+          <span class="footer-game-title">Connect Four</span>
+        </a>
+      </nav>
+    </div>
+
     <div class="footer-links">
       <a href="index.html">Home</a>
       <span class="footer-sep">•</span>

@@ -743,6 +743,74 @@ footer {
   color: rgba(255, 255, 255, 0.15);
 }
 
+/* Fallback Card Links (Initial HTML SEO) */
+.fallback-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Footer Game Directory */
+.footer-directory {
+  max-width: 1200px;
+  margin: 0 auto 30px;
+  padding: 0 16px;
+  text-align: center;
+}
+
+.footer-directory-heading {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #f8fafc;
+  margin-bottom: 18px;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.footer-games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.footer-game-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 10px 14px;
+  color: #cbd5e1;
+  text-decoration: none;
+  font-size: 0.86rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.footer-game-item:hover, .footer-game-item:focus-visible {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(99, 102, 241, 0.4);
+  color: var(--accent-cyan);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.footer-game-icon {
+  font-size: 1.25rem;
+}
+
+.footer-game-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /* Subpage Layout (Privacy Policy & Contact) */
 .page-container {
   max-width: 900px;

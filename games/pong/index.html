@@ -3,7 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>Pong Retro Arena - Arcade Game</title>
+  <title>Pong Retro Arena - Play Classic Pong Online Free | GameZone</title>
+  <meta name="description" content="Play Pong Retro Arena online free. Test your reflexes in classic arcade table tennis. Play solo vs smart AI or challenge a friend in local 2-Player mode.">
+  <link rel="canonical" href="https://vivek6204712965.github.io/gamezone/games/pong/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Pong Retro Arena - Play Classic Pong Online Free | GameZone">
+  <meta property="og:description" content="Play Pong Retro Arena online free. Test your reflexes in classic arcade table tennis. Play solo vs smart AI or challenge a friend in local 2-Player mode.">
+  <meta property="og:url" content="https://vivek6204712965.github.io/gamezone/games/pong/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Pong Retro Arena - Play Classic Pong Online Free | GameZone">
+  <meta name="twitter:description" content="Play Pong Retro Arena online free. Test your reflexes in classic arcade table tennis. Play solo vs smart AI or challenge a friend in local 2-Player mode.">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
     body {
@@ -14,9 +23,135 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 10px;
-      overflow: hidden;
+      justify-content: flex-start;
+      padding: 16px 12px 40px;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+    /* Top Navigation Bar */
+    .game-top-bar {
+      width: 100%;
+      max-width: 580px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      padding: 0 4px;
+      gap: 12px;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #38bdf8;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 8px;
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      transition: all 0.2s ease;
+    }
+    .back-link:hover, .back-link:focus-visible {
+      background: rgba(56, 189, 248, 0.22);
+      border-color: #38bdf8;
+      color: #fff;
+      transform: translateX(-2px);
+      outline: 2px solid #38bdf8;
+      outline-offset: 2px;
+    }
+    .game-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #94a3b8;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 4px 10px;
+      border-radius: 9999px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      letter-spacing: 0.02em;
+    }
+
+    /* SEO & Instructions Guide Section */
+    .game-info-article {
+      width: 100%;
+      max-width: 580px;
+      margin-top: 24px;
+      background: rgba(17, 24, 39, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 24px 20px;
+      color: #cbd5e1;
+      font-size: 0.92rem;
+      line-height: 1.65;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      user-select: text;
+    }
+    .game-info-article h2 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #f8fafc;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 8px;
+    }
+    .game-info-article h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #38bdf8;
+      margin: 16px 0 8px;
+    }
+    .game-info-article p {
+      margin-bottom: 12px;
+    }
+    .game-info-article ul {
+      margin: 0 0 14px 20px;
+    }
+    .game-info-article li {
+      margin-bottom: 6px;
+    }
+    .controls-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 12px 0 16px;
+    }
+    @media (max-width: 520px) {
+      .controls-grid { grid-template-columns: 1fr; }
+    }
+    .controls-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+    .controls-card h4 {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #f1f5f9;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .controls-card ul {
+      margin: 0 0 0 16px;
+      font-size: 0.85rem;
+    }
+    kbd {
+      background: #1e293b;
+      border: 1px solid #475569;
+      border-radius: 4px;
+      box-shadow: 0 1px 0 rgba(0,0,0,0.4);
+      color: #f8fafc;
+      display: inline-block;
+      font-family: monospace;
+      font-size: 0.78rem;
+      padding: 2px 5px;
+      margin: 0 2px;
     }
     .game-container {
       display: flex;
@@ -124,6 +259,13 @@
 </head>
 <body>
 
+  <nav class="game-top-bar" aria-label="Game Navigation">
+    <a href="../../index.html" target="_top" class="back-link">
+      ← Back to GameZone Arcade
+    </a>
+    <span class="game-badge">🎮 Instant Web Game</span>
+  </nav>
+
   <div class="game-container">
     <div class="header">
       <div class="title">🏓 Pong Retro</div>
@@ -155,6 +297,42 @@
       <button class="m-btn" id="btnDown">▼ Down</button>
     </div>
   </div>
+
+  <article class="game-info-article">
+    <h2>About Pong Retro Arena</h2>
+    <p>Pong Retro Arena brings the grandfather of digital video games into the modern web era with crisp neon rendering, dynamic audio synthesizers, intelligent AI paddle tracking, and simultaneous two-player local competition. Rally the puck back and forth in high-speed table tennis duels right inside your browser.</p>
+
+    <h3>How to Play</h3>
+    <p>Choose between <strong>vs AI</strong> (single player) or <strong>2 Player</strong> (local multiplayer) mode and tap Start Match. Guard your goal line by deflecting the incoming neon puck with your paddle. Score a point whenever your opponent fails to return the puck past their baseline. The first player to score 7 points wins the match.</p>
+
+    <h3>Game Controls</h3>
+    <div class="controls-grid">
+      <div class="controls-card">
+        <h4>⌨️ Desktop Controls</h4>
+        <ul>
+          <li><strong>Player 1 (Left):</strong> <kbd>W</kbd> (Up) / <kbd>S</kbd> (Down) or Mouse Movement</li>
+          <li><strong>Player 2 (Right):</strong> <kbd>↑</kbd> (Up) / <kbd>↓</kbd> (Down)</li>
+          <li><strong>Mode Selection:</strong> Click top buttons to toggle AI vs 2-Player</li>
+        </ul>
+      </div>
+      <div class="controls-card">
+        <h4>📱 Mobile & Touch Controls</h4>
+        <ul>
+          <li><strong>▲ Up / ▼ Down</strong> — Tap left paddle control buttons</li>
+          <li><strong>Mode Buttons</strong> — Switch between 1P vs AI and 2-Player modes</li>
+          <li><strong>Start Match / Play Again</strong> — Tap on-screen overlay buttons</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Rules & Spin Physics Tips</h3>
+    <ul>
+      <li><strong>English & Slice Angles:</strong> Hitting the puck with the edge of your paddle imparting sharper rebound angles, sending cutting slice shots past your opponent.</li>
+      <li><strong>Rally Velocity Ramp:</strong> As consecutive volleys increase without scoring, the ball accelerates dynamically, putting reflex speed to the ultimate test.</li>
+      <li><strong>Winning Condition:</strong> First to reach 7 points wins the showdown (<kbd>WIN_SCORE = 7</kbd>).</li>
+      <li><strong>Record Persistence:</strong> Human victories against the computer opponent increment your persistent AI win counter in browser storage.</li>
+    </ul>
+  </article>
 
   <script>
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
