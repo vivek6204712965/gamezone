@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GAMEZONE - Play Free Instant Web Games</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo-container" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+      <div class="logo-icon">🎮</div>
+      <div>
+        <div class="logo-text">GAMEZONE</div>
+      </div>
+      <span class="logo-badge">PRO</span>
+    </div>
+
+    <!-- Search Input -->
+    <div class="search-wrapper">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="searchInput" class="search-input" placeholder="Search 12+ games (e.g. Snake, Tetris, 2048)...">
+    </div>
+
+    <!-- Nav Actions -->
+    <div class="nav-actions">
+      <button class="action-btn" id="surpriseBtn" title="Random Game">
+        🎲 <span>Surprise Me</span>
+      </button>
+      <button class="action-btn primary" onclick="document.getElementById('gamesSection').scrollIntoView({behavior:'smooth'})">
+        ⚡ <span>Explore Games</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-banner">
+      <div class="hero-content">
+        <span class="hero-tag">🔥 FEATURED GAME OF THE DAY</span>
+        <h1 class="hero-title">Snake Neon Cyber Edition</h1>
+        <p class="hero-desc">
+          Experience the iconic retro classic rebuilt with dynamic neon visuals, speed ramps, synthesized sound effects, and persistent high scores. Zero download required.
+        </p>
+        <button class="hero-btn" id="heroPlayBtn">
+          <span>Play Now Free</span> <span>▶</span>
+        </button>
+        <div class="hero-badge-group">
+          <span>⭐ 4.9 Rating</span>
+          <span>👥 42,000+ Players</span>
+          <span>⚡ Instant Play</span>
+        </div>
+      </div>
+      <div class="hero-decor">🐍</div>
+    </div>
+  </section>
+
+  <!-- Category Tabs -->
+  <nav class="categories-container" aria-label="Game Categories">
+    <button class="cat-tab active" data-category="all">✨ All Games</button>
+    <button class="cat-tab" data-category="arcade">🕹️ Arcade</button>
+    <button class="cat-tab" data-category="puzzle">🧩 Puzzle & Logic</button>
+    <button class="cat-tab" data-category="action">🚀 Action & Reflex</button>
+    <button class="cat-tab" data-category="retro">👾 Retro Classics</button>
+    <button class="cat-tab" data-category="favorites">❤️ Favorites</button>
+  </nav>
+
+  <!-- Games Section -->
+  <main class="games-section" id="gamesSection">
+    <div class="section-header">
+      <div class="section-title">
+        <span>🎮 Ready-to-Play Games</span>
+        <span class="game-count" id="gameCount">Showing 12 games</span>
+      </div>
+    </div>
+
+    <!-- Games Cards Grid -->
+    <div class="games-grid" id="gamesGrid">
+      <!-- Injected via portal.js -->
+    </div>
+  </main>
+
+  <!-- Modal Player -->
+  <div class="player-modal" id="playerModal" role="dialog" aria-modal="true">
+    <div class="player-wrapper">
+      <div class="player-header">
+        <div class="player-info">
+          <span style="font-size: 1.4rem;">🕹️</span>
+          <div>
+            <span class="player-title" id="playerTitle">Game Title</span>
+            <span class="player-tag" id="playerTag">Arcade</span>
+          </div>
+        </div>
+        <div class="player-actions">
+          <button class="player-btn" id="reloadGameBtn" title="Restart Game">🔄</button>
+          <button class="player-btn" id="openTabBtn" title="Open in New Tab">↗️</button>
+          <button class="player-btn" id="fullscreenBtn" title="Fullscreen">⛶</button>
+          <button class="player-btn close" id="closeModalBtn" title="Close (Esc)">✕</button>
+        </div>
+      </div>
+      <div class="player-iframe-container">
+        <iframe id="gameIframe" class="game-iframe" src="" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>
+      🎮 <b>GAMEZONE</b> &copy; 2026 — 100% Ready-to-Play Public Web Arcade. No installation or setup required.
+    </p>
+    <p style="margin-top: 6px; font-size: 0.8rem; color: #64748b;">
+      Works offline and across all modern desktop, tablet, and mobile browsers.
+    </p>
+  </footer>
+
+  <script src="js/portal.js"></script>
+</body>
+</html>
