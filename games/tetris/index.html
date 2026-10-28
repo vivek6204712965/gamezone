@@ -10,6 +10,7 @@
 
     gtag('config', 'G-9G3LW44DVS');
   </script>
+  <script src="../../js/analytics.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>Tetris Block Master - Play Free Online Tetris Puzzle Game | GameZone</title>
@@ -832,6 +833,9 @@
       gameOverOverlay.classList.add('hidden');
       lastTime = performance.now();
       requestAnimationFrame(update);
+      if (window.GameAnalytics) {
+        window.GameAnalytics.start('tetris', { level: 1 });
+      }
     }
 
     function gameOver() {
@@ -839,6 +843,9 @@
       sndOver();
       finalScore.textContent = score;
       gameOverOverlay.classList.remove('hidden');
+      if (window.GameAnalytics) {
+        window.GameAnalytics.gameOver('tetris', score, { lines: lines, level: level });
+      }
     }
 
     window.addEventListener('keydown', e => {

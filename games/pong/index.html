@@ -10,6 +10,7 @@
 
     gtag('config', 'G-9G3LW44DVS');
   </script>
+  <script src="../../js/analytics.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>Pong Retro Arena - Play Classic Pong Online Free | GameZone</title>
@@ -643,6 +644,9 @@
       isPlaying = true;
       startOverlay.classList.add('hidden');
       gameOverOverlay.classList.add('hidden');
+      if (window.GameAnalytics) {
+        window.GameAnalytics.start('pong', { mode: is2Player ? '2p' : 'ai' });
+      }
       requestAnimationFrame(update);
     }
 
@@ -650,6 +654,22 @@
       isPlaying = false;
       winnerText.textContent = msg;
       gameOverOverlay.classList.remove('hidden');
+
+      if (window.GameAnalytics) {
+        const mode = is2Player ? '2p' : 'ai';
+        if (!is2Player && p1Score >= WIN_SCORE) {
+          window.GameAnalytics.gameComplete('pong', p1Score, {
+            mode: 'ai',
+            opponent_score: p2Score
+          });
+        } else {
+          window.GameAnalytics.gameOver('pong', p1Score, {
+            mode: mode,
+            opponent_score: p2Score,
+            winner: p1Score >= WIN_SCORE ? 'player1' : (is2Player ? 'player2' : 'ai')
+          });
+        }
+      }
 
       // Count only when in AI mode and human (P1) genuinely wins
       if (!matchRecorded && !is2Player && p1Score >= WIN_SCORE) {

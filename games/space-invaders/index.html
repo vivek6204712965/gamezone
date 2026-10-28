@@ -10,6 +10,7 @@
 
     gtag('config', 'G-9G3LW44DVS');
   </script>
+  <script src="../../js/analytics.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>Galaxy Defender - Play Space Invaders Arcade Game Online Free | GameZone</title>
@@ -728,6 +729,9 @@
       isPlaying = true;
       startOverlay.classList.add('hidden');
       gameOverOverlay.classList.add('hidden');
+      if (window.GameAnalytics) {
+        window.GameAnalytics.start('space-invaders', { wave: 1 });
+      }
       requestAnimationFrame(update);
     }
 
@@ -735,6 +739,9 @@
       isPlaying = false;
       finalScore.textContent = score;
       gameOverOverlay.classList.remove('hidden');
+      if (window.GameAnalytics) {
+        window.GameAnalytics.gameOver('space-invaders', score, { wave: wave });
+      }
     }
 
     // Controls

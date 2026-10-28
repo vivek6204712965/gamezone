@@ -10,6 +10,7 @@
 
     gtag('config', 'G-9G3LW44DVS');
   </script>
+  <script src="../../js/analytics.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>2048 Deluxe - Play 2048 Number Merge Puzzle Online Free | GameZone</title>
@@ -579,6 +580,9 @@
       scoreVal.textContent = score;
       previousState = null;
       gameOverlay.classList.add('hidden');
+      if (window.GameAnalytics) {
+        window.GameAnalytics.reset('2048');
+      }
       addRandomTile();
       addRandomTile();
       render();
@@ -617,6 +621,9 @@
           if (filtered[i] === 2048 && !won) {
             won = true;
             sndWin();
+            if (window.GameAnalytics) {
+              window.GameAnalytics.gameComplete('2048', score + mergedScore);
+            }
           }
         }
       }
@@ -658,6 +665,9 @@
       }
 
       if (changed) {
+        if (window.GameAnalytics && !window.GameAnalytics.isSessionActive('2048')) {
+          window.GameAnalytics.start('2048');
+        }
         score += totalGained;
         scoreVal.textContent = score;
         if (score > highScore) {
@@ -675,6 +685,9 @@
           overlayTitle.style.color = '#ef4444';
           finalScore.textContent = score;
           gameOverlay.classList.remove('hidden');
+          if (window.GameAnalytics) {
+            window.GameAnalytics.gameOver('2048', score);
+          }
         }
       }
     }

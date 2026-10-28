@@ -10,6 +10,7 @@
 
     gtag('config', 'G-9G3LW44DVS');
   </script>
+  <script src="../../js/analytics.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>Dino Runner - Play Endless Dinosaur Runner Game Online Free | GameZone</title>
@@ -729,6 +730,9 @@
       startOverlay.classList.add('hidden');
       gameOverOverlay.classList.add('hidden');
       requestAnimationFrame(update);
+      if (window.GameAnalytics) {
+        window.GameAnalytics.start('dino');
+      }
     }
 
     function gameOver() {
@@ -736,6 +740,9 @@
       sndHit();
       finalScore.textContent = score;
       gameOverOverlay.classList.remove('hidden');
+      if (window.GameAnalytics) {
+        window.GameAnalytics.gameOver('dino', score);
+      }
     }
 
     // Controls

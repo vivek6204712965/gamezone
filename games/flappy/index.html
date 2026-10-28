@@ -10,6 +10,7 @@
 
     gtag('config', 'G-9G3LW44DVS');
   </script>
+  <script src="../../js/analytics.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>Flappy Cyber - Play Cyber Flappy Bird Game Online Free | GameZone</title>
@@ -651,6 +652,9 @@
       startOverlay.classList.add('hidden');
       gameOverOverlay.classList.add('hidden');
       requestAnimationFrame(loop);
+      if (window.GameAnalytics) {
+        window.GameAnalytics.start('flappy');
+      }
     }
 
     function gameOver() {
@@ -658,6 +662,9 @@
       sndCrash();
       finalScore.textContent = score;
       gameOverOverlay.classList.remove('hidden');
+      if (window.GameAnalytics) {
+        window.GameAnalytics.gameOver('flappy', score);
+      }
     }
 
     // Controls

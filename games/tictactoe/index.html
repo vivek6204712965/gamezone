@@ -10,6 +10,7 @@
 
     gtag('config', 'G-9G3LW44DVS');
   </script>
+  <script src="../../js/analytics.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>XO Master - Play Tic Tac Toe Online Free | GameZone</title>
@@ -492,6 +493,10 @@
       const idx = parseInt(e.target.dataset.i, 10);
       if (board[idx] || isGameOver) return;
 
+      if (window.GameAnalytics && !window.GameAnalytics.isSessionActive('tictactoe')) {
+        window.GameAnalytics.start('tictactoe', { mode: vsAI ? 'ai' : '2p' });
+      }
+
       makeMove(idx, turn);
 
       if (!isGameOver && vsAI && turn === 'O') {
@@ -528,6 +533,15 @@
           oWinsEl.textContent = oCount;
         }
         sndWin();
+        if (window.GameAnalytics) {
+          if (vsAI && player === 'X') {
+            window.GameAnalytics.gameComplete('tictactoe', 1, { mode: 'ai', winner: 'X' });
+          } else if (vsAI && player === 'O') {
+            window.GameAnalytics.gameOver('tictactoe', 0, { mode: 'ai', winner: 'O' });
+          } else {
+            window.GameAnalytics.gameComplete('tictactoe', 1, { mode: '2p', winner: player });
+          }
+        }
         return;
       }
 
@@ -536,6 +550,12 @@
         statusText.textContent = `It's a Draw!`;
         tieCount++; tiesEl.textContent = tieCount;
         sndTie();
+        if (window.GameAnalytics) {
+          window.GameAnalytics.gameOver('tictactoe', 0, {
+            mode: vsAI ? 'ai' : '2p',
+            result: 'draw'
+          });
+        }
         return;
       }
 
@@ -591,6 +611,9 @@
       board = Array(9).fill('');
       turn = 'X';
       isGameOver = false;
+      if (window.GameAnalytics) {
+        window.GameAnalytics.reset('tictactoe');
+      }
       cells.forEach(c => {
         c.textContent = '';
         c.className = 'cell';

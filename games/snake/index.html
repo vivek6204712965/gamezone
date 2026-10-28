@@ -10,6 +10,7 @@
 
     gtag('config', 'G-9G3LW44DVS');
   </script>
+  <script src="../../js/analytics.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>Snake Neon - Play Classic Neon Snake Game Online Free | GameZone</title>
@@ -708,6 +709,9 @@
       gameOverOverlay.classList.add('hidden');
       clearInterval(gameLoop);
       gameLoop = setInterval(tick, speed);
+      if (window.GameAnalytics) {
+        window.GameAnalytics.start('snake');
+      }
     }
 
     function gameOver() {
@@ -716,6 +720,9 @@
       soundDie();
       finalScore.textContent = score;
       gameOverOverlay.classList.remove('hidden');
+      if (window.GameAnalytics) {
+        window.GameAnalytics.gameOver('snake', score);
+      }
     }
 
     function handleDirection(newDx, newDy) {

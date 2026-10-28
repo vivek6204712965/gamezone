@@ -10,6 +10,7 @@
 
     gtag('config', 'G-9G3LW44DVS');
   </script>
+  <script src="../../js/analytics.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>Memory Match - Play Emoji Card Memory Puzzle Game Online Free | GameZone</title>
@@ -497,6 +498,9 @@
       movesVal.textContent = 0;
       timeVal.textContent = '0:00';
       winOverlay.classList.add('hidden');
+      if (window.GameAnalytics) {
+        window.GameAnalytics.reset('memory');
+      }
 
       // Double emojis & shuffle
       const deck = [...EMOJIS, ...EMOJIS].sort(() => Math.random() - 0.5);
@@ -528,6 +532,10 @@
 
     function flipCard(card) {
       if (lockBoard || card.classList.contains('flipped') || card.classList.contains('matched')) return;
+
+      if (window.GameAnalytics && !window.GameAnalytics.isSessionActive('memory')) {
+        window.GameAnalytics.start('memory');
+      }
 
       card.classList.add('flipped');
       sndFlip();
@@ -568,6 +576,12 @@
       sndWin();
       winMoves.textContent = moves;
       winTime.textContent = timeVal.textContent;
+      if (window.GameAnalytics) {
+        window.GameAnalytics.gameComplete('memory', moves, {
+          moves: moves,
+          time_seconds: seconds
+        });
+      }
       if (!bestMoves || moves < parseInt(bestMoves, 10)) {
         bestMoves = moves;
         localStorage.setItem('memory_match_best', bestMoves);

@@ -10,6 +10,7 @@
 
     gtag('config', 'G-9G3LW44DVS');
   </script>
+  <script src="../../js/analytics.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>Breakout Neon - Play Classic Brick Breaker Game Online Free | GameZone</title>
@@ -618,6 +619,9 @@
           sndWin();
           overTitle.textContent = 'YOU WIN!';
           overTitle.style.color = '#4ade80';
+          if (window.GameAnalytics) {
+            window.GameAnalytics.gameComplete('breakout', score);
+          }
           endGame();
           return;
         }
@@ -744,6 +748,9 @@
       isPlaying = true;
       startOverlay.classList.add('hidden');
       gameOverOverlay.classList.add('hidden');
+      if (window.GameAnalytics) {
+        window.GameAnalytics.start('breakout');
+      }
       requestAnimationFrame(update);
     }
 
@@ -751,6 +758,9 @@
       isPlaying = false;
       finalScore.textContent = score;
       gameOverOverlay.classList.remove('hidden');
+      if (window.GameAnalytics && window.GameAnalytics.isSessionActive('breakout')) {
+        window.GameAnalytics.gameOver('breakout', score);
+      }
     }
 
     // Controls

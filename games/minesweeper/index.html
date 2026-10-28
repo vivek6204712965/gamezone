@@ -10,6 +10,7 @@
 
     gtag('config', 'G-9G3LW44DVS');
   </script>
+  <script src="../../js/analytics.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>Minesweeper Classic - Play Free Online Minesweeper Puzzle | GameZone</title>
@@ -505,6 +506,9 @@
       mineCountEl.textContent = '010';
       boardEl.style.gridTemplateColumns = `repeat(${COLS}, 32px)`;
       boardEl.innerHTML = '';
+      if (window.GameAnalytics) {
+        window.GameAnalytics.reset('minesweeper');
+      }
 
       grid = [];
       for (let r = 0; r < ROWS; r++) {
@@ -584,6 +588,9 @@
       if (isFirstClick) {
         isFirstClick = false;
         plantMines(cell.r, cell.c);
+        if (window.GameAnalytics) {
+          window.GameAnalytics.start('minesweeper');
+        }
       }
 
       if (cell.isMine) {
@@ -592,6 +599,9 @@
         isGameOver = true;
         clearInterval(timerInterval);
         sndBoom();
+        if (window.GameAnalytics) {
+          window.GameAnalytics.gameOver('minesweeper', null, { time_seconds: seconds });
+        }
         return;
       }
 
@@ -656,6 +666,9 @@
         clearInterval(timerInterval);
         faceBtn.textContent = '😎';
         sndWin();
+        if (window.GameAnalytics) {
+          window.GameAnalytics.gameComplete('minesweeper', seconds, { time_seconds: seconds });
+        }
 
         // Save fastest completion time on genuine win (lower is better)
         try {

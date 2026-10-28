@@ -10,6 +10,7 @@
 
     gtag('config', 'G-9G3LW44DVS');
   </script>
+  <script src="../../js/analytics.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>Connect Four - Play 4-in-a-Row Strategy Game Online Free | GameZone</title>
@@ -487,6 +488,9 @@
       isGameOver = false;
       statusText.innerHTML = `<span style="color:#ef4444;">Red</span>'s Turn`;
       gridEl.innerHTML = '';
+      if (window.GameAnalytics) {
+        window.GameAnalytics.reset('connect4');
+      }
 
       for (let r = 0; r < ROWS; r++) {
         for (let c = 0; c < COLS; c++) {
@@ -512,6 +516,10 @@
       }
       if (targetRow === -1) return; // Col full
 
+      if (window.GameAnalytics && !window.GameAnalytics.isSessionActive('connect4')) {
+        window.GameAnalytics.start('connect4', { mode: vsAI ? 'ai' : '2p' });
+      }
+
       board[targetRow][c] = turn;
       const cell = document.getElementById(`cell-${targetRow}-${c}`);
       cell.classList.add(turn);
@@ -525,6 +533,16 @@
         });
         statusText.innerHTML = `🎉 <span style="color:${turn === 'red' ? '#ef4444' : '#eab308'}; font-weight:bold;">${turn.toUpperCase()}</span> WINS!`;
         sndWin();
+
+        if (window.GameAnalytics) {
+          if (vsAI && turn === 'red') {
+            window.GameAnalytics.gameComplete('connect4', 1, { mode: 'ai', winner: 'red' });
+          } else if (vsAI && turn === 'yellow') {
+            window.GameAnalytics.gameOver('connect4', 0, { mode: 'ai', winner: 'yellow' });
+          } else {
+            window.GameAnalytics.gameComplete('connect4', 1, { mode: '2p', winner: turn });
+          }
+        }
 
         // Count only when human ('red') wins against AI
         if (vsAI && turn === 'red') {
@@ -542,6 +560,12 @@
       if (board.every(row => row.every(val => val !== null))) {
         isGameOver = true;
         statusText.textContent = "It's a Draw!";
+        if (window.GameAnalytics) {
+          window.GameAnalytics.gameOver('connect4', 0, {
+            mode: vsAI ? 'ai' : '2p',
+            result: 'draw'
+          });
+        }
         return;
       }
 
