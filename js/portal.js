@@ -167,6 +167,15 @@ const safeStorage = {
       return defaultValue;
     }
   },
+  getRaw(key) {
+    try {
+      if (typeof window === 'undefined' || !window.localStorage) return null;
+      return window.localStorage.getItem(key);
+    } catch (err) {
+      console.warn(`GameZone: safeStorage.getRaw failed for "${key}":`, err);
+      return null;
+    }
+  },
   set(key, value) {
     try {
       if (typeof window === 'undefined' || !window.localStorage) return false;
@@ -396,6 +405,62 @@ function recordRecentlyPlayed(game) {
 }
 
 /**
+ * Retrieve the saved best score label for a game, if a valid record exists.
+ * Returns null if no record exists or if the game does not support a high score.
+ */
+function getGameBestScore(game) {
+  if (!game) return null;
+  const keyId = (game.slug || game.id || '').toLowerCase();
+
+  let storageKey = null;
+  let unit = '';
+  let isMoves = false;
+
+  switch (keyId) {
+    case 'snake':
+      storageKey = 'snake_neon_best';
+      break;
+    case 'tetris':
+      storageKey = 'tetris_master_best';
+      break;
+    case '2048':
+      storageKey = '2048_deluxe_best';
+      break;
+    case 'flappy':
+      storageKey = 'flappy_cyber_best';
+      break;
+    case 'breakout':
+      storageKey = 'breakout_neon_best';
+      break;
+    case 'dino':
+      storageKey = 'dino_runner_best';
+      unit = 'm';
+      break;
+    case 'space-invaders':
+      storageKey = 'galaxy_defender_best';
+      break;
+    case 'memory':
+      storageKey = 'memory_match_best';
+      isMoves = true;
+      break;
+    default:
+      return null;
+  }
+
+  const raw = safeStorage.getRaw(storageKey);
+  if (!raw) return null;
+
+  const val = parseInt(raw, 10);
+  if (!Number.isFinite(val) || val <= 0) return null;
+
+  if (isMoves) {
+    return `🏆 Best: ${val} ${val === 1 ? 'move' : 'moves'}`;
+  }
+
+  return `🏆 Best: ${val.toLocaleString()}${unit}`;
+}
+
+/**
  * Render games based on category filter, favorites, recently played, and search query
  */
 function renderGames() {
@@ -481,23 +546,29 @@ function renderGames() {
   // Render cards
   filtered.forEach(game => {
     const isFav = isGameFavorite(game);
+    const bestScore = getGameBestScore(game);
     const safeTitle = escapeHtml(game.title);
     const safeDesc = escapeHtml(game.desc);
     const safeCatLabel = escapeHtml(game.categoryLabel);
     const safeBadge = escapeHtml(game.badge || game.categoryLabel);
     const safeIcon = escapeHtml(game.icon);
     const safeId = escapeHtml(game.id);
+    const bestBadgeHtml = bestScore
+      ? `<span class="card-best-badge" style="position: absolute; bottom: 10px; left: 10px; background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(4px); border: 1px solid rgba(250, 204, 21, 0.45); color: #facc15; font-size: 0.72rem; font-weight: 700; padding: 3px 8px; border-radius: 6px; box-shadow: 0 0 10px rgba(250, 204, 21, 0.25); display: inline-flex; align-items: center; gap: 4px; z-index: 1; pointer-events: none; letter-spacing: 0.02em;">${escapeHtml(bestScore)}</span>`
+      : '';
 
     const card = document.createElement('div');
     card.className = 'game-card';
     card.setAttribute('role', 'article');
     card.setAttribute('tabindex', '0');
-    card.setAttribute('aria-label', `${game.title} - ${game.categoryLabel} game`);
+    const ariaBest = bestScore ? `, ${bestScore.replace('🏆 ', '')}` : '';
+    card.setAttribute('aria-label', `${game.title} - ${game.categoryLabel} game${ariaBest}`);
 
     card.innerHTML = `
       <div class="card-thumbnail">
         <span class="thumbnail-icon">${safeIcon}</span>
         <span class="badge-tag">${safeBadge}</span>
+        ${bestBadgeHtml}
         <button
           type="button"
           class="fav-btn ${isFav ? 'active' : ''}"
@@ -581,6 +652,7 @@ function closeGame() {
   playerModal.classList.remove('active');
   gameIframe.src = '';
   document.body.style.overflow = '';
+  renderGames();
 }
 
 // Events
