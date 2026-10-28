@@ -162,6 +162,67 @@
       padding: 2px 5px;
       margin: 0 2px;
     }
+    /* Related Games Section */
+    .related-games-section {
+      margin-top: 24px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .related-games-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    @media (max-width: 480px) {
+      .related-games-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .related-game-card {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      text-decoration: none;
+      color: #f1f5f9;
+      transition: all 0.2s ease;
+    }
+    .related-game-card:hover, .related-game-card:focus-visible {
+      background: rgba(56, 189, 248, 0.1);
+      border-color: rgba(56, 189, 248, 0.35);
+      transform: translateY(-2px);
+      outline: none;
+    }
+    .related-game-icon {
+      font-size: 1.4rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .related-game-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+    .related-game-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #f8fafc;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .related-game-category {
+      font-size: 0.72rem;
+      color: #94a3b8;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
     .game-container {
       display: flex;
       gap: 16px;
@@ -227,6 +288,7 @@
       backdrop-filter: blur(4px);
     }
     .overlay.hidden { display: none; }
+    .overlay h1,
     .overlay h2 {
       font-size: 1.8rem;
       color: #a78bfa;
@@ -305,7 +367,7 @@
     <div class="canvas-wrapper">
       <canvas id="board" width="240" height="480"></canvas>
       <div id="startOverlay" class="overlay">
-        <h2>TETRIS MASTER</h2>
+        <h1>TETRIS MASTER</h1>
         <p style="color:#9ca3af; font-size:0.85rem;">Drop & clear blocks</p>
         <button class="btn" id="startBtn">START GAME</button>
       </div>
@@ -385,6 +447,40 @@
       <li><strong>Strategic Hold:</strong> Press <kbd>C</kbd> or tap Hold to bank an awkward piece for later. You can swap once per falling piece.</li>
       <li><strong>Ghost Piece Guide:</strong> Track the semi-transparent projection on the floor to position your hard drops with pinpoint precision.</li>
     </ul>
+    <!-- Related Games Section -->
+    <div class="related-games-section">
+      <h3>🎮 Related Games You Might Like</h3>
+      <div class="related-games-grid">
+        <a href="../2048/" target="_top" class="related-game-card">
+          <span class="related-game-icon">🔢</span>
+          <div class="related-game-info">
+            <span class="related-game-title">2048 Deluxe</span>
+            <span class="related-game-category">Puzzle</span>
+          </div>
+        </a>
+        <a href="../memory/" target="_top" class="related-game-card">
+          <span class="related-game-icon">🃏</span>
+          <div class="related-game-info">
+            <span class="related-game-title">Memory Match</span>
+            <span class="related-game-category">Brain</span>
+          </div>
+        </a>
+        <a href="../minesweeper/" target="_top" class="related-game-card">
+          <span class="related-game-icon">💣</span>
+          <div class="related-game-info">
+            <span class="related-game-title">Minesweeper Classic</span>
+            <span class="related-game-category">Puzzle</span>
+          </div>
+        </a>
+        <a href="../connect4/" target="_top" class="related-game-card">
+          <span class="related-game-icon">🔴</span>
+          <div class="related-game-info">
+            <span class="related-game-title">Connect Four</span>
+            <span class="related-game-category">Strategy</span>
+          </div>
+        </a>
+      </div>
+    </div>
   </article>
 
   <script>

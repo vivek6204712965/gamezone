@@ -162,6 +162,67 @@
       padding: 2px 5px;
       margin: 0 2px;
     }
+    /* Related Games Section */
+    .related-games-section {
+      margin-top: 24px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .related-games-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    @media (max-width: 480px) {
+      .related-games-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .related-game-card {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      text-decoration: none;
+      color: #f1f5f9;
+      transition: all 0.2s ease;
+    }
+    .related-game-card:hover, .related-game-card:focus-visible {
+      background: rgba(56, 189, 248, 0.1);
+      border-color: rgba(56, 189, 248, 0.35);
+      transform: translateY(-2px);
+      outline: none;
+    }
+    .related-game-icon {
+      font-size: 1.4rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .related-game-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+    .related-game-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #f8fafc;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .related-game-category {
+      font-size: 0.72rem;
+      color: #94a3b8;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
     .game-container {
       display: flex;
       flex-direction: column;
@@ -271,7 +332,7 @@
 
   <div class="game-container">
     <div class="header">
-      <div class="title">👾 Galaxy Defender</div>
+      <h1 class="title">👾 Galaxy Defender</h1>
       <div class="scores">
         <div class="score-box">Wave: <span id="waveVal">1</span></div>
         <div class="score-box">Lives: <span id="livesVal">🚀🚀🚀</span></div>
@@ -339,6 +400,40 @@
       <li><strong>Wave Progression:</strong> Eradicating an entire fleet immediately advances to the next wave with tighter drop intervals and fiercer bomb drop rates.</li>
       <li><strong>Fleet High Score:</strong> Your top combat tally is preserved across sessions via browser local storage.</li>
     </ul>
+    <!-- Related Games Section -->
+    <div class="related-games-section">
+      <h3>🎮 Related Games You Might Like</h3>
+      <div class="related-games-grid">
+        <a href="../breakout/" target="_top" class="related-game-card">
+          <span class="related-game-icon">🧱</span>
+          <div class="related-game-info">
+            <span class="related-game-title">Breakout Neon</span>
+            <span class="related-game-category">Arcade</span>
+          </div>
+        </a>
+        <a href="../flappy/" target="_top" class="related-game-card">
+          <span class="related-game-icon">🐦</span>
+          <div class="related-game-info">
+            <span class="related-game-title">Flappy Cyber</span>
+            <span class="related-game-category">Action</span>
+          </div>
+        </a>
+        <a href="../dino/" target="_top" class="related-game-card">
+          <span class="related-game-icon">🦖</span>
+          <div class="related-game-info">
+            <span class="related-game-title">Dino Runner</span>
+            <span class="related-game-category">Action</span>
+          </div>
+        </a>
+        <a href="../pong/" target="_top" class="related-game-card">
+          <span class="related-game-icon">🏓</span>
+          <div class="related-game-info">
+            <span class="related-game-title">Pong Retro Arena</span>
+            <span class="related-game-category">Retro</span>
+          </div>
+        </a>
+      </div>
+    </div>
   </article>
 
   <script>

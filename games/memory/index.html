@@ -162,6 +162,67 @@
       padding: 2px 5px;
       margin: 0 2px;
     }
+    /* Related Games Section */
+    .related-games-section {
+      margin-top: 24px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .related-games-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    @media (max-width: 480px) {
+      .related-games-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .related-game-card {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      text-decoration: none;
+      color: #f1f5f9;
+      transition: all 0.2s ease;
+    }
+    .related-game-card:hover, .related-game-card:focus-visible {
+      background: rgba(56, 189, 248, 0.1);
+      border-color: rgba(56, 189, 248, 0.35);
+      transform: translateY(-2px);
+      outline: none;
+    }
+    .related-game-icon {
+      font-size: 1.4rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .related-game-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+    .related-game-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #f8fafc;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .related-game-category {
+      font-size: 0.72rem;
+      color: #94a3b8;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
     .game-container {
       max-width: 440px;
       width: 100%;
@@ -299,7 +360,7 @@
 
   <div class="game-container">
     <div class="header">
-      <div class="title">🃏 Memory Match</div>
+      <h1 class="title">🃏 Memory Match</h1>
       <button class="btn" id="restartTopBtn" style="padding: 4px 12px; font-size: 0.8rem;">Restart</button>
     </div>
 
@@ -344,6 +405,40 @@
       <li><strong>Systematic Scouting:</strong> Uncover cards in orderly rows instead of choosing random positions to avoid wasting turns on already visited tiles.</li>
       <li><strong>Move Counter Record:</strong> Your personal best record (lowest total moves to solve the board) is stored permanently in browser storage.</li>
     </ul>
+    <!-- Related Games Section -->
+    <div class="related-games-section">
+      <h3>🎮 Related Games You Might Like</h3>
+      <div class="related-games-grid">
+        <a href="../2048/" target="_top" class="related-game-card">
+          <span class="related-game-icon">🔢</span>
+          <div class="related-game-info">
+            <span class="related-game-title">2048 Deluxe</span>
+            <span class="related-game-category">Puzzle</span>
+          </div>
+        </a>
+        <a href="../minesweeper/" target="_top" class="related-game-card">
+          <span class="related-game-icon">💣</span>
+          <div class="related-game-info">
+            <span class="related-game-title">Minesweeper Classic</span>
+            <span class="related-game-category">Puzzle</span>
+          </div>
+        </a>
+        <a href="../tetris/" target="_top" class="related-game-card">
+          <span class="related-game-icon">🧱</span>
+          <div class="related-game-info">
+            <span class="related-game-title">Tetris Block Master</span>
+            <span class="related-game-category">Puzzle</span>
+          </div>
+        </a>
+        <a href="../connect4/" target="_top" class="related-game-card">
+          <span class="related-game-icon">🔴</span>
+          <div class="related-game-info">
+            <span class="related-game-title">Connect Four</span>
+            <span class="related-game-category">Strategy</span>
+          </div>
+        </a>
+      </div>
+    </div>
   </article>
 
   <div id="winOverlay" class="overlay hidden">
