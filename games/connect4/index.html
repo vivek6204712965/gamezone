@@ -243,6 +243,16 @@
         });
         statusText.innerHTML = `🎉 <span style="color:${turn === 'red' ? '#ef4444' : '#eab308'}; font-weight:bold;">${turn.toUpperCase()}</span> WINS!`;
         sndWin();
+
+        // Count only when human ('red') wins against AI
+        if (vsAI && turn === 'red') {
+          try {
+            const current = parseInt(localStorage.getItem('connect4_ai_wins'), 10) || 0;
+            localStorage.setItem('connect4_ai_wins', String(current + 1));
+          } catch (e) {
+            console.warn('Could not save connect4 record:', e);
+          }
+        }
         return;
       }
 

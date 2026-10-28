@@ -415,6 +415,7 @@ function getGameBestScore(game) {
   let storageKey = null;
   let unit = '';
   let isMoves = false;
+  let isWins = false;
 
   switch (keyId) {
     case 'snake':
@@ -443,6 +444,22 @@ function getGameBestScore(game) {
       storageKey = 'memory_match_best';
       isMoves = true;
       break;
+    case 'minesweeper':
+      storageKey = 'minesweeper_best_time';
+      unit = 's';
+      break;
+    case 'pong':
+      storageKey = 'pong_ai_wins';
+      isWins = true;
+      break;
+    case 'tictactoe':
+      storageKey = 'tictactoe_ai_wins';
+      isWins = true;
+      break;
+    case 'connect4':
+      storageKey = 'connect4_ai_wins';
+      isWins = true;
+      break;
     default:
       return null;
   }
@@ -455,6 +472,10 @@ function getGameBestScore(game) {
 
   if (isMoves) {
     return `🏆 Best: ${val} ${val === 1 ? 'move' : 'moves'}`;
+  }
+
+  if (isWins) {
+    return `🏆 Best: ${val} ${val === 1 ? 'win' : 'wins'}`;
   }
 
   return `🏆 Best: ${val.toLocaleString()}${unit}`;

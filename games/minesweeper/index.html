@@ -347,6 +347,7 @@
     }
 
     function checkWin() {
+      if (isGameOver) return;
       let unrevealedCount = 0;
       grid.flat().forEach(cell => {
         if (!cell.isRevealed && !cell.isMine) unrevealedCount++;
@@ -357,6 +358,19 @@
         clearInterval(timerInterval);
         faceBtn.textContent = '😎';
         sndWin();
+
+        // Save fastest completion time on genuine win (lower is better)
+        try {
+          if (seconds > 0) {
+            const currentBest = localStorage.getItem('minesweeper_best_time');
+            const prev = currentBest ? parseInt(currentBest, 10) : null;
+            if (prev === null || isNaN(prev) || seconds < prev) {
+              localStorage.setItem('minesweeper_best_time', String(seconds));
+            }
+          }
+        } catch (e) {
+          console.warn('Could not save minesweeper record:', e);
+        }
       }
     }
 

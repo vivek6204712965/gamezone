@@ -230,8 +230,22 @@
         isGameOver = true;
         winCombo.forEach(i => cells[i].classList.add('winning'));
         statusText.innerHTML = `Player <span style="color:${player === 'X' ? '#38bdf8' : '#f472b6'}">${player}</span> Wins!`;
-        if (player === 'X') { xCount++; xWinsEl.textContent = xCount; }
-        else { oCount++; oWinsEl.textContent = oCount; }
+        if (player === 'X') {
+          xCount++;
+          xWinsEl.textContent = xCount;
+          // Count only when human ('X') wins against AI
+          if (vsAI) {
+            try {
+              const current = parseInt(localStorage.getItem('tictactoe_ai_wins'), 10) || 0;
+              localStorage.setItem('tictactoe_ai_wins', String(current + 1));
+            } catch (e) {
+              console.warn('Could not save tictactoe record:', e);
+            }
+          }
+        } else {
+          oCount++;
+          oWinsEl.textContent = oCount;
+        }
         sndWin();
         return;
       }

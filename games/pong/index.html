@@ -350,11 +350,14 @@
       });
     }
 
+    let matchRecorded = false;
+
     function startGame() {
       p1Score = 0; p2Score = 0;
       p1.y = (canvas.height - PADDLE_HEIGHT) / 2;
       p2.y = (canvas.height - PADDLE_HEIGHT) / 2;
       resetBall(Math.random() > 0.5 ? 1 : -1);
+      matchRecorded = false;
       isPlaying = true;
       startOverlay.classList.add('hidden');
       gameOverOverlay.classList.add('hidden');
@@ -365,6 +368,17 @@
       isPlaying = false;
       winnerText.textContent = msg;
       gameOverOverlay.classList.remove('hidden');
+
+      // Count only when in AI mode and human (P1) genuinely wins
+      if (!matchRecorded && !is2Player && p1Score >= WIN_SCORE) {
+        matchRecorded = true;
+        try {
+          const current = parseInt(localStorage.getItem('pong_ai_wins'), 10) || 0;
+          localStorage.setItem('pong_ai_wins', String(current + 1));
+        } catch (e) {
+          console.warn('Could not save pong record:', e);
+        }
+      }
     }
 
     // Controls
