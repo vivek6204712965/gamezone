@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /gamezone/
+
+Sitemap: https://vivek6204712965.github.io/gamezone/sitemap.xml
