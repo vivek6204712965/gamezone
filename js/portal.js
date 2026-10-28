@@ -153,10 +153,50 @@ const BUILTIN_GAMES = [
 // Active game catalog (initialized with built-in games for immediate offline rendering)
 let activeGames = [...BUILTIN_GAMES];
 
+// Safe localStorage wrapper (graceful fallback if localStorage is blocked/unavailable)
+const safeStorage = {
+  get(key, defaultValue = []) {
+    try {
+      if (typeof window === 'undefined' || !window.localStorage) return defaultValue;
+      const raw = window.localStorage.getItem(key);
+      if (raw === null) return defaultValue;
+      const parsed = JSON.parse(raw);
+      return Array.isArray(defaultValue) && !Array.isArray(parsed) ? defaultValue : (parsed ?? defaultValue);
+    } catch (err) {
+      console.warn(`GameZone: safeStorage.get failed for "${key}":`, err);
+      return defaultValue;
+    }
+  },
+  set(key, value) {
+    try {
+      if (typeof window === 'undefined' || !window.localStorage) return false;
+      window.localStorage.setItem(key, JSON.stringify(value));
+      return true;
+    } catch (err) {
+      console.warn(`GameZone: safeStorage.set failed for "${key}":`, err);
+      return false;
+    }
+  }
+};
+
+/**
+ * XSS-safe HTML string escaper
+ */
+function escapeHtml(str) {
+  if (typeof str !== 'string') return '';
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 // State
 let currentCategory = 'all';
 let searchQuery = '';
-let favorites = JSON.parse(localStorage.getItem('gamezone_favorites') || '[]');
+let favorites = safeStorage.get('gamezone_favorites', []);
+let recentGames = safeStorage.get('gamezone_recent', []);
 
 // DOM Elements
 const gamesGrid = document.getElementById('gamesGrid');
@@ -315,90 +355,226 @@ async function syncDatabase() {
 }
 
 /**
- * Render games based on category filter and search query
+ * Check if a game is marked as favorite
  */
-function renderGames() {
-  const filtered = activeGames.filter(g => {
-    const matchesCat = currentCategory === 'all' || 
-                       (currentCategory === 'favorites' ? favorites.includes(g.id) : g.category === currentCategory);
-    const matchesSearch = g.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          g.desc.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          g.categoryLabel.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCat && matchesSearch;
-  });
-
-  gameCountEl.textContent = `Showing ${filtered.length} games`;
-  gamesGrid.innerHTML = '';
-
-  if (filtered.length === 0) {
-    gamesGrid.innerHTML = `
-      <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: #94a3b8;">
-        <div style="font-size: 3rem; margin-bottom: 12px;">🎮</div>
-        <h3>No games found</h3>
-        <p style="font-size: 0.9rem; margin-top: 6px;">Try searching for another keyword or change category!</p>
-      </div>
-    `;
-    return;
-  }
-
-  filtered.forEach(game => {
-    const isFav = favorites.includes(game.id);
-    const card = document.createElement('div');
-    card.className = 'game-card';
-    card.innerHTML = `
-      <div class="card-thumbnail" style="background: ${game.bg};">
-        <span class="thumbnail-icon">${game.icon}</span>
-        <span class="badge-tag">${game.badge || game.categoryLabel}</span>
-        <button class="fav-btn ${isFav ? 'active' : ''}" title="Favorite" data-id="${game.id}">
-          ${isFav ? '❤️' : '🤍'}
-        </button>
-      </div>
-      <div class="card-body">
-        <div class="card-title-row">
-          <div class="card-title">${game.title}</div>
-          <span class="card-category-pill">${game.categoryLabel}</span>
-        </div>
-        <div class="card-desc">${game.desc}</div>
-        <div class="card-footer">
-          <span class="card-category">● ${game.categoryLabel}</span>
-          <button class="card-play-btn">Play Now ▶</button>
-        </div>
-      </div>
-    `;
-
-    // Click to play
-    card.addEventListener('click', (e) => {
-      if (e.target.closest('.fav-btn')) return;
-      openGame(game);
-    });
-
-    // Favorite toggle click
-    const favBtn = card.querySelector('.fav-btn');
-    favBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      toggleFavorite(game.id);
-    });
-
-    gamesGrid.appendChild(card);
-  });
+function isGameFavorite(game) {
+  if (!game) return false;
+  return favorites.includes(game.id) || (game.slug && favorites.includes(game.slug));
 }
 
+/**
+ * Toggle favorite status of a game
+ */
 function toggleFavorite(id) {
+  if (!id) return;
   if (favorites.includes(id)) {
     favorites = favorites.filter(f => f !== id);
   } else {
     favorites.push(id);
   }
-  localStorage.setItem('gamezone_favorites', JSON.stringify(favorites));
+  safeStorage.set('gamezone_favorites', favorites);
   renderGames();
 }
 
+/**
+ * Record a game in the Recently Played list (max 10 unique games, newest first)
+ */
+function recordRecentlyPlayed(game) {
+  if (!game) return;
+  const id = game.id || game.slug;
+  if (!id) return;
+
+  // Remove if already in list to prevent duplicate and move to top
+  recentGames = recentGames.filter(item => item !== id && item !== game.slug && item !== game.id);
+  // Add to beginning of list
+  recentGames.unshift(id);
+  // Maintain maximum 10 unique games
+  if (recentGames.length > 10) {
+    recentGames = recentGames.slice(0, 10);
+  }
+  safeStorage.set('gamezone_recent', recentGames);
+}
+
+/**
+ * Render games based on category filter, favorites, recently played, and search query
+ */
+function renderGames() {
+  let gamesToDisplay = [];
+
+  if (currentCategory === 'recent') {
+    // Map recentGames IDs to active game objects in exact recency order
+    recentGames.forEach(recentId => {
+      const game = activeGames.find(g => g.id === recentId || g.slug === recentId);
+      if (game && !gamesToDisplay.some(existing => existing.id === game.id)) {
+        gamesToDisplay.push(game);
+      }
+    });
+  } else if (currentCategory === 'favorites') {
+    gamesToDisplay = activeGames.filter(g => isGameFavorite(g));
+  } else if (currentCategory === 'all') {
+    gamesToDisplay = activeGames;
+  } else {
+    gamesToDisplay = activeGames.filter(g => g.category === currentCategory);
+  }
+
+  const q = searchQuery.toLowerCase().trim();
+  const filtered = gamesToDisplay.filter(g => {
+    if (!q) return true;
+    const title = (g.title || '').toLowerCase();
+    const desc = (g.desc || '').toLowerCase();
+    const cat = (g.categoryLabel || '').toLowerCase();
+    const slug = (g.slug || '').toLowerCase();
+    return title.includes(q) || desc.includes(q) || cat.includes(q) || slug.includes(q);
+  });
+
+  // Accessible game count description
+  if (currentCategory === 'favorites') {
+    gameCountEl.textContent = `Showing ${filtered.length} favorite ${filtered.length === 1 ? 'game' : 'games'}`;
+  } else if (currentCategory === 'recent') {
+    gameCountEl.textContent = `Showing ${filtered.length} recently played ${filtered.length === 1 ? 'game' : 'games'}`;
+  } else {
+    gameCountEl.textContent = `Showing ${filtered.length} ${filtered.length === 1 ? 'game' : 'games'}`;
+  }
+
+  gamesGrid.innerHTML = '';
+
+  // Empty State handling
+  if (filtered.length === 0) {
+    let emptyHtml = '';
+    if (currentCategory === 'favorites' && favorites.length === 0) {
+      emptyHtml = `
+        <div class="empty-state">
+          <span class="empty-state-icon">❤️</span>
+          <h3 class="empty-state-title">No favorite games yet</h3>
+          <p class="empty-state-desc">Click the heart icon on any game card to add it to your favorites list for quick access!</p>
+        </div>
+      `;
+    } else if (currentCategory === 'recent' && recentGames.length === 0) {
+      emptyHtml = `
+        <div class="empty-state">
+          <span class="empty-state-icon">🕒</span>
+          <h3 class="empty-state-title">No recently played games yet</h3>
+          <p class="empty-state-desc">Launch any game to see it recorded here in your recently played list.</p>
+        </div>
+      `;
+    } else if (q) {
+      emptyHtml = `
+        <div class="empty-state">
+          <span class="empty-state-icon">🔍</span>
+          <h3 class="empty-state-title">No games found</h3>
+          <p class="empty-state-desc">No games match "<strong>${escapeHtml(searchQuery)}</strong>". Try another keyword or switch categories!</p>
+        </div>
+      `;
+    } else {
+      emptyHtml = `
+        <div class="empty-state">
+          <span class="empty-state-icon">🎮</span>
+          <h3 class="empty-state-title">No games available</h3>
+          <p class="empty-state-desc">No games found in this category. Try exploring other categories!</p>
+        </div>
+      `;
+    }
+    gamesGrid.innerHTML = emptyHtml;
+    return;
+  }
+
+  // Render cards
+  filtered.forEach(game => {
+    const isFav = isGameFavorite(game);
+    const safeTitle = escapeHtml(game.title);
+    const safeDesc = escapeHtml(game.desc);
+    const safeCatLabel = escapeHtml(game.categoryLabel);
+    const safeBadge = escapeHtml(game.badge || game.categoryLabel);
+    const safeIcon = escapeHtml(game.icon);
+    const safeId = escapeHtml(game.id);
+
+    const card = document.createElement('div');
+    card.className = 'game-card';
+    card.setAttribute('role', 'article');
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('aria-label', `${game.title} - ${game.categoryLabel} game`);
+
+    card.innerHTML = `
+      <div class="card-thumbnail">
+        <span class="thumbnail-icon">${safeIcon}</span>
+        <span class="badge-tag">${safeBadge}</span>
+        <button
+          type="button"
+          class="fav-btn ${isFav ? 'active' : ''}"
+          title="${isFav ? 'Remove from favorites' : 'Add to favorites'}"
+          aria-label="${isFav ? 'Remove ' + safeTitle + ' from favorites' : 'Add ' + safeTitle + ' to favorites'}"
+          aria-pressed="${isFav ? 'true' : 'false'}"
+          data-id="${safeId}">
+          ${isFav ? '❤️' : '🤍'}
+        </button>
+      </div>
+      <div class="card-body">
+        <div class="card-title-row">
+          <div class="card-title">${safeTitle}</div>
+          <span class="card-category-pill">${safeCatLabel}</span>
+        </div>
+        <div class="card-desc">${safeDesc}</div>
+        <div class="card-footer">
+          <span class="card-category">● ${safeCatLabel}</span>
+          <button type="button" class="card-play-btn" aria-hidden="true" tabindex="-1">Play Now ▶</button>
+        </div>
+      </div>
+    `;
+
+    // Set background safely
+    const thumb = card.querySelector('.card-thumbnail');
+    if (thumb && game.bg) {
+      thumb.style.background = game.bg;
+    }
+
+    // Click to play (skip if favorite button was clicked)
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('.fav-btn')) return;
+      openGame(game);
+    });
+
+    // Keyboard support: Enter or Space launches game
+    card.addEventListener('keydown', (e) => {
+      if (e.target.closest('.fav-btn')) return;
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openGame(game);
+      }
+    });
+
+    // Favorite toggle button
+    const favBtn = card.querySelector('.fav-btn');
+    if (favBtn) {
+      favBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleFavorite(game.id);
+      });
+      favBtn.addEventListener('keydown', (e) => {
+        e.stopPropagation();
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggleFavorite(game.id);
+        }
+      });
+    }
+
+    gamesGrid.appendChild(card);
+  });
+}
+
 function openGame(game) {
+  if (!game) return;
+  recordRecentlyPlayed(game);
   playerTitle.textContent = game.title;
   playerTag.textContent = game.categoryLabel;
   gameIframe.src = game.path;
   playerModal.classList.add('active');
   document.body.style.overflow = 'hidden';
+
+  // If currently in 'recent' view, re-render to reflect the newly moved game on top
+  if (currentCategory === 'recent') {
+    renderGames();
+  }
 }
 
 function closeGame() {
