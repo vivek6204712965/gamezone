@@ -400,6 +400,16 @@
       cursor: pointer;
     }
     .m-btn:active { background: #0284c7; }
+    @media (max-width: 580px) {
+      body { padding: 10px 8px 30px; width: 100%; overflow-x: hidden; }
+      .game-top-bar { max-width: 100%; }
+      .game-container { padding: 12px 8px; width: 100%; max-width: 100%; }
+      .canvas-wrapper { width: 100%; max-width: 100%; }
+      canvas#gameCanvas { width: 100%; height: auto; max-width: 100%; }
+      .overlay { width: 100%; max-width: 100%; }
+      .game-info-article { max-width: 100%; }
+      .mobile-bar .m-btn { padding: 8px 20px; font-size: 1rem; }
+    }
   </style>
 </head>
 <body>
@@ -763,9 +773,23 @@
 
     canvas.addEventListener('mousemove', e => {
       const rect = canvas.getBoundingClientRect();
-      p1.y = (e.clientY - rect.top) - PADDLE_HEIGHT / 2;
+      const scaleY = rect.height ? canvas.height / rect.height : 1;
+      p1.y = ((e.clientY - rect.top) * scaleY) - PADDLE_HEIGHT / 2;
       p1.y = Math.max(10, Math.min(canvas.height - PADDLE_HEIGHT - 10, p1.y));
     });
+
+    const handlePongTouch = e => {
+      if (e.touches && e.touches.length > 0) {
+        e.preventDefault();
+        const rect = canvas.getBoundingClientRect();
+        const scaleY = rect.height ? canvas.height / rect.height : 1;
+        p1.y = ((e.touches[0].clientY - rect.top) * scaleY) - PADDLE_HEIGHT / 2;
+        p1.y = Math.max(10, Math.min(canvas.height - PADDLE_HEIGHT - 10, p1.y));
+      }
+    };
+
+    canvas.addEventListener('touchstart', handlePongTouch, { passive: false });
+    canvas.addEventListener('touchmove', handlePongTouch, { passive: false });
 
     mode1P.onclick = () => {
       is2Player = false;

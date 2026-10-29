@@ -394,6 +394,18 @@
       cursor: pointer;
     }
     .m-btn:active { background: #f43f5e; }
+    @media (max-width: 520px) {
+      body { padding: 10px 8px 30px; width: 100%; overflow-x: hidden; }
+      .game-top-bar { max-width: 100%; }
+      .game-container { padding: 12px 8px; width: 100%; max-width: 100%; }
+      .stats { flex-wrap: wrap; gap: 4px; }
+      .stat-badge { font-size: 0.8rem; padding: 4px 8px; }
+      .canvas-wrapper { width: 100%; max-width: 100%; }
+      canvas#gameCanvas { width: 100%; height: auto; max-width: 100%; }
+      .overlay { width: 100%; max-width: 100%; }
+      .game-info-article { max-width: 100%; }
+      .mobile-bar .m-btn { padding: 8px 16px; font-size: 0.95rem; }
+    }
   </style>
 </head>
 <body>
@@ -837,16 +849,23 @@
     // Controls
     canvas.addEventListener('mousemove', e => {
       const rect = canvas.getBoundingClientRect();
-      const rootX = e.clientX - rect.left;
+      const scaleX = rect.width ? canvas.width / rect.width : 1;
+      const rootX = (e.clientX - rect.left) * scaleX;
       paddleX = Math.max(0, Math.min(canvas.width - paddleWidth, rootX - paddleWidth / 2));
     });
 
-    canvas.addEventListener('touchmove', e => {
-      e.preventDefault();
-      const rect = canvas.getBoundingClientRect();
-      const rootX = e.touches[0].clientX - rect.left;
-      paddleX = Math.max(0, Math.min(canvas.width - paddleWidth, rootX - paddleWidth / 2));
-    }, { passive: false });
+    const handleBreakoutTouch = e => {
+      if (e.touches && e.touches.length > 0) {
+        e.preventDefault();
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = rect.width ? canvas.width / rect.width : 1;
+        const rootX = (e.touches[0].clientX - rect.left) * scaleX;
+        paddleX = Math.max(0, Math.min(canvas.width - paddleWidth, rootX - paddleWidth / 2));
+      }
+    };
+
+    canvas.addEventListener('touchstart', handleBreakoutTouch, { passive: false });
+    canvas.addEventListener('touchmove', handleBreakoutTouch, { passive: false });
 
     window.addEventListener('keydown', e => {
       if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {

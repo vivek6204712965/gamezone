@@ -391,6 +391,18 @@
       cursor: pointer;
     }
     .m-btn:active { background: #a855f7; }
+    @media (max-width: 520px) {
+      body { padding: 10px 8px 30px; width: 100%; overflow-x: hidden; }
+      .game-top-bar { max-width: 100%; }
+      .game-container { padding: 12px 8px; width: 100%; max-width: 100%; }
+      .scores { flex-wrap: wrap; gap: 4px; justify-content: flex-end; }
+      .score-box { font-size: 0.78rem; padding: 4px 6px; }
+      .canvas-wrapper { width: 100%; max-width: 100%; }
+      canvas#gameCanvas { width: 100%; height: auto; max-width: 100%; }
+      .overlay { width: 100%; max-width: 100%; }
+      .game-info-article { max-width: 100%; }
+      .mobile-bar .m-btn { padding: 8px 12px; font-size: 0.9rem; }
+    }
   </style>
 </head>
 <body>

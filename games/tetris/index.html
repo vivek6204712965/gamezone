@@ -407,6 +407,21 @@
       font-weight: bold;
     }
     .m-btn:active { background: #8b5cf6; }
+    @media (max-width: 520px) {
+      body { padding: 10px 8px 30px; width: 100%; overflow-x: hidden; }
+      .game-top-bar { max-width: 100%; }
+      .game-container { padding: 12px 8px; width: 100%; max-width: 100%; flex-wrap: wrap; justify-content: center; gap: 8px; }
+      .side-panel { width: 100%; flex-direction: row; justify-content: center; gap: 6px; }
+      .panel-box { padding: 4px 6px; }
+      .panel-label { font-size: 0.65rem; margin-bottom: 2px; }
+      .panel-value { font-size: 0.9rem; }
+      .mini-canvas { width: 50px; height: 50px; }
+      .canvas-wrapper { max-width: 100%; }
+      canvas#board { max-width: 100%; height: auto; }
+      .game-info-article { max-width: 100%; }
+      .mobile-controls { flex-wrap: wrap; }
+      .m-btn { padding: 8px 12px; font-size: 0.9rem; }
+    }
   </style>
 </head>
 <body>
