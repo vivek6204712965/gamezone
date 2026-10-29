@@ -292,6 +292,24 @@
     },
 
     /**
+     * Record a cross-game navigation click.
+     *
+     * @param {string} fromGame - Current game slug
+     * @param {string} toGame - Destination game slug
+     * @param {string} [source] - Click origin (e.g. 'game_over', 'related_grid', 'quick_nav')
+     */
+    trackCrossGame(fromGame, toGame, source = 'game_over') {
+      if (!toGame) return;
+      try {
+        sendGtagEvent('cross_game_click', {
+          from_game: fromGame || 'unknown',
+          to_game: toGame,
+          click_source: source
+        });
+      } catch (_) {}
+    },
+
+    /**
      * Reset session state without firing an event (e.g. on new game before any move).
      *
      * @param {string} gameSlug - Identifier of the game
@@ -316,4 +334,25 @@
   };
 
   root.GameAnalytics = GameAnalytics;
+
+  // Global Cross-Game Navigation Tracking
+  if (typeof document !== 'undefined') {
+    document.addEventListener('click', function(e) {
+      const link = e.target.closest('a[data-track-game], a.related-game-card');
+      if (link) {
+        let toGame = link.getAttribute('data-track-game');
+        if (!toGame) {
+          const href = link.getAttribute('href') || '';
+          const match = href.match(/(?:\.\.\/)?games\/([^\/]+)|\.\.\/([^\/]+)/);
+          toGame = match ? (match[1] || match[2]) : '';
+        }
+        const source = link.getAttribute('data-track-source') || (link.classList.contains('related-game-card') ? 'related_grid' : 'overlay');
+        const fromMatch = (typeof location !== 'undefined' ? location.pathname : '').match(/\/games\/([^\/]+)/);
+        const fromGame = fromMatch ? fromMatch[1] : 'homepage';
+        if (toGame && GameAnalytics && typeof GameAnalytics.trackCrossGame === 'function') {
+          GameAnalytics.trackCrossGame(fromGame, toGame, source);
+        }
+      }
+    }, true);
+  }
 })(typeof window !== 'undefined' ? window : this);

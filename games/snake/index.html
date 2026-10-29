@@ -272,6 +272,47 @@
       padding: 2px 5px;
       margin: 0 2px;
     }
+
+    /* Cross-Game Discovery Action Styles */
+    .btn-next-game {
+      background: rgba(255, 255, 255, 0.08);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      padding: 8px 18px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      border-radius: 9999px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+    }
+    .btn-next-game:hover {
+      background: rgba(56, 189, 248, 0.2);
+      border-color: #38bdf8;
+      color: #ffffff;
+      transform: scale(1.04);
+      box-shadow: 0 0 18px rgba(56, 189, 248, 0.5);
+    }
+    .btn-group-overlay {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      margin-top: 6px;
+      width: 100%;
+    }
+    .quick-nav-bar {
+      margin-top: 14px;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
     /* FAQ Section */
     .faq-list {
       display: flex;
@@ -524,7 +565,10 @@
       <div id="gameOverOverlay" class="overlay hidden">
         <h2>GAME OVER</h2>
         <p>Final Score: <span id="finalScore" style="color:#10b981; font-weight:bold;">0</span></p>
-        <button class="btn" id="restartBtn">PLAY AGAIN</button>
+        <div class="btn-group-overlay">
+          <button class="btn" id="restartBtn">PLAY AGAIN</button>
+          <a href="../tetris/" target="_top" class="btn-next-game" data-track-game="tetris" data-track-source="overlay">🧱 Next: Tetris →</a>
+        </div>
       </div>
     </div>
 

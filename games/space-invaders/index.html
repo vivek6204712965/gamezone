@@ -274,6 +274,47 @@
     }
     /* Related Games Section */
 
+
+    /* Cross-Game Discovery Action Styles */
+    .btn-next-game {
+      background: rgba(255, 255, 255, 0.08);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      padding: 8px 18px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      border-radius: 9999px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+    }
+    .btn-next-game:hover {
+      background: rgba(56, 189, 248, 0.2);
+      border-color: #38bdf8;
+      color: #ffffff;
+      transform: scale(1.04);
+      box-shadow: 0 0 18px rgba(56, 189, 248, 0.5);
+    }
+    .btn-group-overlay {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      margin-top: 6px;
+      width: 100%;
+    }
+    .quick-nav-bar {
+      margin-top: 14px;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
     /* FAQ Section */
     .faq-list {
       display: flex;
@@ -500,7 +541,10 @@
       <div id="gameOverOverlay" class="overlay hidden">
         <h2 style="color:#ef4444;" id="overTitle">FLEET DESTROYED</h2>
         <p>Final Score: <span id="finalScore" style="color:#c084fc; font-weight:bold;">0</span></p>
-        <button class="btn" id="restartBtn">TRY AGAIN</button>
+        <div class="btn-group-overlay">
+          <button class="btn" id="restartBtn">TRY AGAIN</button>
+          <a href="../breakout/" target="_top" class="btn-next-game" data-track-game="breakout" data-track-source="overlay">🧱 Next: Breakout Neon →</a>
+        </div>
       </div>
     </div>
 
