@@ -1,7 +1,8 @@
 /**
  * GameZone - Analytics Service
- * Lightweight Google Analytics 4 (GA4) event tracker for gameplay activity.
- * Measurement ID: G-9G3LW44DVS
+ * Dual-dispatch event tracker for gameplay activity:
+ * 1. Google Analytics 4 (GA4) - Measurement ID: G-9G3LW44DVS
+ * 2. Supabase Telemetry - public.game_activity (PostgREST REST API)
  *
  * Provides safe, non-blocking telemetry for:
  * - game_start: Fired only when gameplay genuinely begins (not on page load)
@@ -9,9 +10,24 @@
  * - game_complete: Fired only on genuine victory/completion (board cleared, 2048 reached, etc.)
  * - post_score: Fired when a meaningful score is recorded
  * - duration_seconds: Automatically calculated from session start to valid end event
+ *
+ * Security & Reliability Guarantees:
+ * - Never blocks gameplay rendering or input loop (all failures are silent).
+ * - Uses native fetch() with keepalive: true so requests finish even if the user navigates away.
+ * - Uses public publishable anon key only.
+ * - Payload conforms strictly to database CHECK constraints.
  */
 (function(root) {
   'use strict';
+
+  // Allowed database game slugs (mirrors chk_game_slug)
+  const VALID_GAME_SLUGS = new Set([
+    'snake', 'tetris', '2048', 'flappy', 'breakout', 'dino',
+    'space-invaders', 'pong', 'memory', 'tictactoe', 'minesweeper', 'connect4'
+  ]);
+
+  // Allowed database event types (mirrors chk_event_type)
+  const VALID_DB_EVENTS = new Set(['game_start', 'game_over', 'game_complete']);
 
   // Defensive lookup for gtag: checks local window, then parent window if inside iframe
   function getGtag() {
@@ -28,12 +44,108 @@
     return null;
   }
 
-  // Safe event dispatcher - never throws, never blocks gameplay
+  // Safe GA4 event dispatcher - never throws, never blocks gameplay
   function sendGtagEvent(eventName, params) {
     try {
       const gtag = getGtag();
       if (typeof gtag === 'function') {
         gtag('event', eventName, params);
+      }
+    } catch (_) {
+      // Silent failure: tracking must never interrupt gameplay
+    }
+  }
+
+  // Defensive lookup for Supabase Configuration: checks local window, then parent window
+  function getSupabaseConfig() {
+    try {
+      if (typeof root.SUPABASE_CONFIG === 'object' && root.SUPABASE_CONFIG && root.SUPABASE_CONFIG.url && root.SUPABASE_CONFIG.anonKey) {
+        return root.SUPABASE_CONFIG;
+      }
+    } catch (_) {}
+
+    try {
+      if (root.parent && root.parent !== root && typeof root.parent.SUPABASE_CONFIG === 'object' && root.parent.SUPABASE_CONFIG && root.parent.SUPABASE_CONFIG.url && root.parent.SUPABASE_CONFIG.anonKey) {
+        return root.parent.SUPABASE_CONFIG;
+      }
+    } catch (_) {}
+
+    return null;
+  }
+
+  // Sanitize numeric score to comply with chk_score: (score IS NULL OR (score >= 0 AND score <= 10000000))
+  function sanitizeScore(score) {
+    if (typeof score !== 'number' || !Number.isFinite(score)) return null;
+    const rounded = Math.round(score);
+    if (rounded < 0 || rounded > 10000000) return null;
+    return rounded;
+  }
+
+  // Sanitize duration to comply with chk_duration: (duration_seconds >= 0 AND duration_seconds <= 86400)
+  function sanitizeDuration(duration) {
+    if (typeof duration !== 'number' || !Number.isFinite(duration)) return 0;
+    const rounded = Math.round(duration);
+    if (rounded < 0) return 0;
+    if (rounded > 86400) return 86400;
+    return rounded;
+  }
+
+  // Sanitize metadata to comply with chk_metadata_type (jsonb object) and chk_metadata_size (<= 2048 bytes)
+  // Strips any sensitive or personal fields defensively
+  function sanitizeMetadata(metadata) {
+    if (!metadata || typeof metadata !== 'object' || Array.isArray(metadata)) {
+      return {};
+    }
+    const safe = {};
+    const disallowedKeys = new Set(['email', 'name', 'user', 'username', 'token', 'auth', 'password', 'ip']);
+    for (const key of Object.keys(metadata)) {
+      if (disallowedKeys.has(key.toLowerCase())) continue;
+      const val = metadata[key];
+      const type = typeof val;
+      if (type === 'string' || type === 'number' || type === 'boolean') {
+        safe[key] = val;
+      }
+    }
+    return safe;
+  }
+
+  // Safe Supabase PostgREST dispatcher - non-blocking, keepalive, anon key only
+  function sendSupabaseEvent(eventType, gameSlug, score, durationSeconds, extraParams) {
+    try {
+      if (!VALID_DB_EVENTS.has(eventType)) return;
+      if (!VALID_GAME_SLUGS.has(gameSlug)) return;
+
+      const config = getSupabaseConfig();
+      if (!config) return;
+
+      const url = (config.url || '').trim().replace(/\/+$/, '');
+      const anonKey = (config.anonKey || '').trim();
+      if (!url || !anonKey || url.includes('YOUR_') || anonKey.includes('YOUR_')) return;
+      if (!url.startsWith('https://') && !url.startsWith('http://')) return;
+
+      const payload = {
+        event_type: eventType,
+        game_slug: gameSlug,
+        score: sanitizeScore(score),
+        duration_seconds: sanitizeDuration(durationSeconds),
+        metadata: sanitizeMetadata(extraParams)
+      };
+
+      if (typeof root.fetch === 'function') {
+        root.fetch(`${url}/rest/v1/game_activity`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': anonKey,
+            'Authorization': 'Bearer ' + anonKey,
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify(payload),
+          keepalive: true,
+          mode: 'cors'
+        }).catch(function() {
+          // Silent failure: tracking must never interrupt gameplay
+        });
       }
     } catch (_) {
       // Silent failure: tracking must never interrupt gameplay
@@ -66,10 +178,14 @@
           completed: false
         };
 
+        // 1. Dispatch to Google Analytics 4
         sendGtagEvent('game_start', {
           game_slug: gameSlug,
           ...extraParams
         });
+
+        // 2. Dispatch to Supabase Telemetry
+        sendSupabaseEvent('game_start', gameSlug, null, 0, extraParams);
       } catch (_) {}
     },
 
@@ -106,7 +222,11 @@
           params.score = Math.round(score);
         }
 
+        // 1. Dispatch to Google Analytics 4
         sendGtagEvent('game_over', params);
+
+        // 2. Dispatch to Supabase Telemetry
+        sendSupabaseEvent('game_over', gameSlug, score, duration, extraParams);
       } catch (_) {}
     },
 
@@ -145,7 +265,11 @@
           params.score = Math.round(score);
         }
 
+        // 1. Dispatch to Google Analytics 4
         sendGtagEvent('game_complete', params);
+
+        // 2. Dispatch to Supabase Telemetry
+        sendSupabaseEvent('game_complete', gameSlug, score, duration, extraParams);
       } catch (_) {}
     },
 

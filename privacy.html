@@ -83,7 +83,10 @@
               <b>GitHub Pages:</b> GameZone is hosted statically on GitHub Pages. GitHub may collect technical server logs (including visitor IP addresses and browser headers) for security monitoring, DDoS mitigation, and service integrity in accordance with the <a href="https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement" target="_blank" rel="noopener" style="color: var(--accent-cyan);">GitHub Privacy Statement</a>.
             </li>
             <li>
-              <b>Supabase Database:</b> We use Supabase (PostgreSQL) strictly as a public, read-only content catalog to query game metadata (titles, descriptions, categories) from the <code>public.games</code> table. Supabase enforces Row Level Security (RLS) policies allowing public read-only access. No player identities, authentication tokens, or personal records are stored or transmitted.
+              <b>Supabase Database & Gameplay Telemetry:</b> We use Supabase (PostgreSQL) for game catalog retrieval and lightweight, anonymous gameplay activity metrics. When you play a game, anonymous telemetry events (<code>game_start</code>, <code>game_over</code>, <code>game_complete</code>) recording the game played, play duration in seconds, and final score are logged to understand game popularity and improve the arcade experience. No player identities, names, email addresses, authentication credentials, IP tracking, or personal profiles are ever collected or stored with these records. Database access is strictly secured via Row Level Security (RLS).
+            </li>
+            <li>
+              <b>Google Analytics 4 (GA4):</b> We utilize Google Analytics 4 (Measurement ID: <code>G-9G3LW44DVS</code>) to monitor aggregated website traffic and gameplay events (such as game sessions started and finished). Google Analytics processes telemetry in accordance with the <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" style="color: var(--accent-cyan);">Google Privacy Policy</a> without collecting personal user profiles.
             </li>
             <li>
               <b>jsDelivr CDN:</b> The Supabase client library is loaded via jsDelivr (<a href="https://www.jsdelivr.com/terms/privacy-policy-jsdelivr-net" target="_blank" rel="noopener" style="color: var(--accent-cyan);">jsDelivr Privacy Policy</a>) to ensure reliable script delivery.
@@ -123,6 +126,8 @@
       <a href="privacy.html" style="color: var(--accent-cyan);">Privacy Policy</a>
       <span class="footer-sep">•</span>
       <a href="contact.html">Contact Us</a>
+      <span class="footer-sep">•</span>
+      <a href="admin.html">Admin</a>
       <span class="footer-sep">•</span>
       <a href="https://github.com/vivek6204712965/gamezone" target="_blank" rel="noopener">GitHub</a>
     </div>
