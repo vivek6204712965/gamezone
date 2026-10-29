@@ -14,15 +14,15 @@
   <script src="../../js/analytics.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>Snake Neon - Play Classic Neon Snake Game Online Free | GameZone</title>
-  <meta name="description" content="Play Snake Neon online for free! Guide your glowing snake to eat cyber orbs, grow longer, avoid walls and your own tail, and set high scores in your browser.">
+  <title>Snake Neon - Play Classic Snake Game Online Free | GameZone</title>
+  <meta name="description" content="Play classic Snake online for free in your browser. Guide your glowing cyber snake on a 20x20 grid, dodge walls, beat the speed curve, and track high scores.">
   <link rel="canonical" href="https://vivek6204712965.github.io/gamezone/games/snake/">
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://vivek6204712965.github.io/gamezone/games/snake/">
-  <meta property="og:title" content="Snake Neon - Play Classic Neon Snake Game Online Free | GameZone">
-  <meta property="og:description" content="Play Snake Neon online for free! Guide your glowing snake to eat cyber orbs, grow longer, avoid walls and your own tail, and set high scores in your browser.">
+  <meta property="og:title" content="Snake Neon - Play Classic Snake Game Online Free | GameZone">
+  <meta property="og:description" content="Play classic Snake online for free in your browser. Guide your glowing cyber snake on a 20x20 grid, dodge walls, beat the speed curve, and track high scores.">
   <meta property="og:site_name" content="GameZone">
   <meta property="og:image" content="https://vivek6204712965.github.io/gamezone/assets/og-image.png">
   <meta property="og:image:width" content="1200">
@@ -32,8 +32,8 @@
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://vivek6204712965.github.io/gamezone/games/snake/">
-  <meta name="twitter:title" content="Snake Neon - Play Classic Neon Snake Game Online Free | GameZone">
-  <meta name="twitter:description" content="Play Snake Neon online for free! Guide your glowing snake to eat cyber orbs, grow longer, avoid walls and your own tail, and set high scores in your browser.">
+  <meta name="twitter:title" content="Snake Neon - Play Classic Snake Game Online Free | GameZone">
+  <meta name="twitter:description" content="Play classic Snake online for free in your browser. Guide your glowing cyber snake on a 20x20 grid, dodge walls, beat the speed curve, and track high scores.">
   <meta name="twitter:image" content="https://vivek6204712965.github.io/gamezone/assets/og-image.png">
   <meta name="twitter:image:alt" content="Snake Neon - Free Online Browser Game | GameZone">
 
@@ -50,7 +50,7 @@
         "@id": "https://vivek6204712965.github.io/gamezone/games/snake/#game",
         "name": "Snake Neon",
         "url": "https://vivek6204712965.github.io/gamezone/games/snake/",
-        "description": "Play Snake Neon online for free! Guide your glowing snake to eat cyber orbs, grow longer, avoid walls and your own tail, and set high scores in your browser.",
+        "description": "Play classic Snake online for free in your browser. Guide your glowing cyber snake on a 20x20 grid, dodge walls, beat the speed curve, and track high scores.",
         "genre": [
           "Arcade",
           "Retro",
@@ -88,6 +88,44 @@
             "position": 3,
             "name": "Snake Neon",
             "item": "https://vivek6204712965.github.io/gamezone/games/snake/"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://vivek6204712965.github.io/gamezone/games/snake/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Which keyboard controls are supported in Snake Neon?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Desktop players can steer using either the Arrow Keys (Up, Down, Left, Right) or W, A, S, D keys. Spacebar starts or restarts the game, and P toggles pause."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do you pause the game on desktop and mobile?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "On desktop keyboards, press P at any time during active gameplay to pause and resume. On mobile devices, there is no dedicated in-game pause button; pausing occurs between games via the start and game-over overlay screens."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How is the high score saved?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Your best score is automatically saved locally in your browser's localStorage under the key 'snake_neon_best'. It persists across page refreshes on the same device and browser without requiring an account."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does Snake Neon work offline?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Initial loading requires an active internet connection to download the page assets, stylesheets, and cloud analytics. However, once loaded in your browser tab, the core game loop, collision detection, and procedural Web Audio effects execute purely in client-side JavaScript."
+            }
           }
         ]
       }
@@ -233,6 +271,31 @@
       font-size: 0.78rem;
       padding: 2px 5px;
       margin: 0 2px;
+    }
+    /* FAQ Section */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 12px 0 16px;
+    }
+    .faq-item {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+    .faq-question {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #f1f5f9;
+      margin-bottom: 6px;
+    }
+    .faq-answer {
+      font-size: 0.86rem;
+      color: #94a3b8;
+      line-height: 1.55;
+      margin-bottom: 0;
     }
     /* Related Games Section */
     .related-games-section {
@@ -505,27 +568,45 @@
 
     <h3>Rules & Pro Tips</h3>
     <ul>
-      <li><strong>Avoid Wall Collisions:</strong> Striking any of the four arena borders immediately triggers game over.</li>
-      <li><strong>Watch Your Tail:</strong> As your score climbs, your growing body becomes your biggest hazard. Plan sweeping loops along the outer perimeter.</li>
-      <li><strong>Dynamic Speed Ramping:</strong> Speed interval tightens progressively as you score, challenging your reaction time.</li>
-      <li><strong>High Score Persistence:</strong> Your personal best score is stored in your browser's local storage so you can return anytime to beat your record.</li>
+      <li><strong>20×20 Arena Matrix:</strong> The playfield is a strict 20×20 grid consisting of 400 total tiles. Your snake starts 3 segments long at the arena center.</li>
+      <li><strong>Orb Scoring:</strong> Every glowing energy orb collected awards exactly 10 points and extends your snake's tail by one tile segment.</li>
+      <li><strong>Progressive Speed Ramping:</strong> Movement starts at a 120ms interval per step. Each consumed orb accelerates the timer by 1.5ms until hitting the maximum speed cap of 60ms (reached at 400 points / 40 orbs). Beyond 400 points, velocity remains constant at its fastest pace.</li>
+      <li><strong>Solid Wall & Tail Collisions:</strong> Striking any of the four arena borders or running into your own body triggers an immediate game over.</li>
+      <li><strong>Reverse Direction Protection:</strong> The input handler safely blocks immediate 180-degree reverses (for example, pressing Left while moving Right), preventing instant self-collision.</li>
+      <li><strong>Perimeter & S-Curve Tactics:</strong> In early play, circle along outer walls. As your tail lengthens past 20 segments, weave across the grid in parallel S-curve lanes to compress your body without trapping your head in closed pockets.</li>
+      <li><strong>Theoretical Score Ceiling:</strong> With 400 grid tiles and a 3-segment starting snake, the theoretical mathematical maximum score for filling every unoccupied cell is 3,970 points (397 orbs × 10 points). <em>Note:</em> The game logic does not contain a scripted win state or victory cutscene at this figure; play continues as long as open space remains without collision.</li>
     </ul>
+
+    <h3>Frequently Asked Questions</h3>
+    <div class="faq-list">
+      <div class="faq-item">
+        <h4 class="faq-question">Which keyboard controls are supported in Snake Neon?</h4>
+        <p class="faq-answer">Desktop players can steer direction using either the Arrow Keys (<kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd>) or standard <kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> keys. Press <kbd>Spacebar</kbd> to start or restart, and <kbd>P</kbd> to toggle pause.</p>
+      </div>
+      <div class="faq-item">
+        <h4 class="faq-question">How do you pause the game on desktop and mobile?</h4>
+        <p class="faq-answer">On desktop keyboards, press <kbd>P</kbd> at any time during active gameplay to pause and resume. On mobile devices, there is no dedicated in-game pause button; pausing occurs between games via the start and game-over overlay screens.</p>
+      </div>
+      <div class="faq-item">
+        <h4 class="faq-question">How is the high score saved?</h4>
+        <p class="faq-answer">Your best score is automatically saved locally in your browser's <code>localStorage</code> under the key <code>snake_neon_best</code>. It persists across page refreshes on the same device and browser without requiring an account login.</p>
+      </div>
+      <div class="faq-item">
+        <h4 class="faq-question">Does Snake Neon work offline?</h4>
+        <p class="faq-answer">Initial loading requires an active internet connection to download the page assets, stylesheets, and cloud analytics. However, once loaded in your browser tab, the core game loop, collision detection, and procedural Web Audio effects execute purely in client-side JavaScript. (Note: GameZone does not currently include an offline Service Worker cache).</p>
+      </div>
+    </div>
+
     <!-- Related Games Section -->
     <div class="related-games-section">
       <h3>🎮 Related Games You Might Like</h3>
+      <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 10px;">Looking for another quick challenge? Jump into these instant browser games from the GameZone collection:</p>
       <div class="related-games-grid">
         <a href="../tetris/" target="_top" class="related-game-card">
           <span class="related-game-icon">🧱</span>
           <div class="related-game-info">
             <span class="related-game-title">Tetris Block Master</span>
             <span class="related-game-category">Puzzle</span>
-          </div>
-        </a>
-        <a href="../breakout/" target="_top" class="related-game-card">
-          <span class="related-game-icon">🧱</span>
-          <div class="related-game-info">
-            <span class="related-game-title">Breakout Neon</span>
-            <span class="related-game-category">Arcade</span>
           </div>
         </a>
         <a href="../dino/" target="_top" class="related-game-card">
@@ -535,11 +616,18 @@
             <span class="related-game-category">Action</span>
           </div>
         </a>
-        <a href="../space-invaders/" target="_top" class="related-game-card">
-          <span class="related-game-icon">👾</span>
+        <a href="../breakout/" target="_top" class="related-game-card">
+          <span class="related-game-icon">🧱</span>
           <div class="related-game-info">
-            <span class="related-game-title">Galaxy Defender</span>
+            <span class="related-game-title">Breakout Neon</span>
             <span class="related-game-category">Arcade</span>
+          </div>
+        </a>
+        <a href="../2048/" target="_top" class="related-game-card">
+          <span class="related-game-icon">🔢</span>
+          <div class="related-game-info">
+            <span class="related-game-title">2048 Deluxe</span>
+            <span class="related-game-category">Puzzle</span>
           </div>
         </a>
       </div>
